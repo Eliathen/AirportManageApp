@@ -1,7 +1,7 @@
 package entity;
 
 public class Airport {
-    private int id;
+    private Integer id;
     private String name;
     private String address;
     private String city;
@@ -13,9 +13,7 @@ public class Airport {
         this.city = city;
     }
 
-    public int getId(){
-        return id;
-    }
+    public int getId(){ return id; }
     public String getName(){
         return name;
     }
@@ -25,6 +23,7 @@ public class Airport {
     public String getCity(){
         return city;
     }
+
     @Override
     public String toString() {
         return "Airport{" +

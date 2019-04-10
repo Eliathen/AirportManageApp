@@ -1,4 +1,5 @@
 package dao;
+
 import api.UserDao;
 import entity.User;
 
@@ -7,39 +8,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.sql.SQLException;
 
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl extends baseDao implements UserDao {
 
-    //TODO uzupelnic pola
-    private Connection connection;
-    private Statement statement;
-    public static final String DRIVER = "";
-    public static final String DB_URL = "";
-    private final String databaseName = "";
-    private final String user = "";
-    private final String password = "";
-
-    public UserDaoImpl(Connection connection) {
-        init();
+    public UserDaoImpl() {
+        super();
     }
 
-    public void init(){
-        try {
-            Class.forName(DRIVER);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            connection = DriverManager.getConnection(DB_URL);
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
     public void saveUser(User user) {
         try{
-        PreparedStatement prepStmt = connection.prepareStatement("INSERT INTO USER (login, haslo) VALUES (?,?)");
+            PreparedStatement prepStmt = connection.prepareStatement("INSERT INTO USER (login, password) VALUES (?,?)");
             prepStmt.setString(1, user.getLogin());
             prepStmt.setString(2,user.getPassword());
 
