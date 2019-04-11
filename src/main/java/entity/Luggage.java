@@ -13,6 +13,12 @@ public class Luggage {
         this.height = height;
     }
 
+    public Luggage(String code, Float weight, Integer height) {
+        this.code = code;
+        this.weight = weight;
+        this.height = height;
+    }
+
     public Long getId() {
         return id;
     }

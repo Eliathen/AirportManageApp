@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AirportDaoImpl extends baseDao implements AirportDao {
+public class AirportDaoImpl extends BaseDao implements AirportDao {
 
     public AirportDaoImpl(){
         super();

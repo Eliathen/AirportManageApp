@@ -5,16 +5,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class baseDao {
+public class BaseDao {
 
     protected Connection connection;
     protected Statement statement;
     public static final String DRIVER = "org.h2.Driver";
-    public static final String DB_URL = "jdbc:h2:~/Airport";
+    public static final String DB_URL = "jdbc:h2:tcp://localhost/~/Airport";
     protected final String user = "admin";
     protected final String password = "";
 
-    public baseDao() {
+    public BaseDao() {
         init();
     }
 

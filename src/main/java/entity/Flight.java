@@ -1,5 +1,7 @@
 package entity;
 
+import sun.util.resources.LocaleData;
+
 import java.util.Date;
 
 public class Flight {
@@ -7,10 +9,17 @@ public class Flight {
     private Long airlineId;
     private Integer initialAirlineId;
     private Integer finalAirlineId;
-    private Date initialDate;
+    private LocaleData initialDate;
 
-    public Flight(Long id, Long airlineId, Integer initialAirlineId, Integer finalAirlineId, Date initialDate){
+    public Flight(Long id, Long airlineId, Integer initialAirlineId, Integer finalAirlineId, LocaleData initialDate){
         this.id = id;
+        this.airlineId = airlineId;
+        this.initialAirlineId = initialAirlineId;
+        this.finalAirlineId = finalAirlineId;
+        this.initialDate = initialDate;
+    }
+
+    public Flight(Long airlineId, Integer initialAirlineId, Integer finalAirlineId, LocaleData initialDate) {
         this.airlineId = airlineId;
         this.initialAirlineId = initialAirlineId;
         this.finalAirlineId = finalAirlineId;
@@ -33,7 +42,7 @@ public class Flight {
         return finalAirlineId;
     }
 
-    public Date getInitialDate() {
+    public LocaleData getInitialDate() {
         return initialDate;
     }
 

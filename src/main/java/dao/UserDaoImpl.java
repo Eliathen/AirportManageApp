@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.sql.SQLException;
 
-public class UserDaoImpl extends baseDao implements UserDao {
+public class UserDaoImpl extends BaseDao implements UserDao {
 
     public UserDaoImpl() {
         super();

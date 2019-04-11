@@ -2,13 +2,19 @@ package entity;
 
 import java.math.BigDecimal;
 
-public class Employee extends Passanger {
+public class Employee extends Passenger {
     private String occupation;
     private BigDecimal salary;
     private Long airlineId;
 
     public Employee(Long id, String name, String surname, String pesel, String occupation, BigDecimal salary, Long airlineId){
         super(id,name,surname,pesel);
+        this.occupation = occupation;
+        this.salary = salary;
+        this.airlineId = airlineId;
+    }
+    public Employee(String name, String surname, String pesel, String occupation, BigDecimal salary, Long airlineId){
+        super(name,surname,pesel);
         this.occupation = occupation;
         this.salary = salary;
         this.airlineId = airlineId;

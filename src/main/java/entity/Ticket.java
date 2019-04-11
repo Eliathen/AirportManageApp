@@ -13,6 +13,13 @@ public class Ticket {
         this.passangerId = passangerId;
 
     }
+
+    public Ticket(Long flightNumber, Long luggageId, Long passangerId) {
+        this.flightNumber = flightNumber;
+        this.luggageId = luggageId;
+        this.passangerId = passangerId;
+    }
+
     public Long getId(){
         return id;
     }
@@ -28,7 +35,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket{" +
+        return "TicketDao{" +
                 "id=" + id +
                 ", flightNumber=" + flightNumber +
                 ", luggageId=" + luggageId +

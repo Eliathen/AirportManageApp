@@ -15,6 +15,15 @@ public class Plane {
         this.capacity = capacity;
         this.weight = weight;
     }
+
+    public Plane(String registrationNumber, Integer modelNumber, String name, Integer capacity, Long weight) {
+        this.registrationNumber = registrationNumber;
+        this.modelNumber = modelNumber;
+        this.name = name;
+        this.capacity = capacity;
+        this.weight = weight;
+    }
+
     public Long getId(){
         return id;
     }
@@ -36,7 +45,7 @@ public class Plane {
 
     @Override
     public String toString() {
-        return "Plane{" +
+        return "PlaneDao{" +
                 "id=" + id +
                 ", registrationNumber='" + registrationNumber + '\'' +
                 ", modelNumber=" + modelNumber +
