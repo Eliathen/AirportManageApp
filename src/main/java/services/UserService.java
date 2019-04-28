@@ -2,6 +2,7 @@ package services;
 
 import dao.UserDao;
 import entity.User;
+import exceptions.LoginAlreadyExistException;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class UserService {
         userDao = new UserDao();
     }
 
-    public void saveUser(User user){
+    public void saveUser(User user) throws LoginAlreadyExistException {
         userDao.openCurrentSessionwithTransaction();
         userDao.saveUser(user);
         userDao.closeCurrentSessionwithTransaction();
@@ -29,10 +30,15 @@ public class UserService {
         userDao.closeCurrentSessionwithTransaction();
     }
     public void updateUser(User user){
-
         userDao.openCurrentSessionwithTransaction();
         userDao.updateUser(user);
         userDao.closeCurrentSessionwithTransaction();
+    }
+    public boolean isCorrentLoginAndPassword(String login, String password){
+        userDao.openCurrentSession();
+        boolean result = userDao.isCorrentLoginAndPassword(login, password);
+        userDao.closeCurrentSession();
+        return result;
     }
     @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {

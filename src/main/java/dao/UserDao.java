@@ -2,10 +2,12 @@ package dao;
 
 import api.UserDaoInterface;
 import entity.User;
+import exceptions.LoginAlreadyExistException;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.query.Query;
+import exceptions.LoginAlreadyExistException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -87,12 +89,21 @@ public class UserDao implements UserDaoInterface {
         User user = (User) query.uniqueResult();
         return user;
     }
-    public void saveUser(User user){
-        try{
+    public void saveUser(User user) throws LoginAlreadyExistException{
+        if(!isLoginAlreadyExist(user.getLogin())) {
             getCurrentSession().save(user);
-        }catch(JDBCException e){
-            e.printStackTrace();
         }
+        else {
+            throw new LoginAlreadyExistException("This login exists");
+        }
+
+    }
+    public boolean isLoginAlreadyExist(String login){
+        User user = getByLogin(login);
+        if(user != null){
+            return true;
+        }
+        return false;
     }
     public void removeUserById(Long userId){
         User user = getById(userId);
@@ -106,13 +117,23 @@ public class UserDao implements UserDaoInterface {
 
         getCurrentSession().update(user);
     }
+    public boolean isCorrentLoginAndPassword(String login, String password){
+        User user = getByLogin(login);
+        if(user == null){
+            return false;
+        }
+        boolean isLoginCorrent = user.getLogin().equals(login);
+        boolean isPasswordCorrent = user.getPassword().equals(password);
+
+        return isLoginCorrent && isPasswordCorrent;
+    }
     @SuppressWarnings("unchecked")
     public List<User> getAllUsers(){
         try {
             String q = "FROM User";
             Query query;
             query = currentSession.createQuery(q);
-            List<User> users = query.list();
+            List<User> users = query.getResultList();
             return users;
         }catch (Exception e){
             System.err.println("SELECT FROM USER ERROR");
