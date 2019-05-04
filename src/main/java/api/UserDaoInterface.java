@@ -17,5 +17,5 @@ public interface UserDaoInterface extends Serializable {
 
     public void updateUser(User user);
 
-    public boolean isCorrentLoginAndPassword(String login, String password);
+    public boolean isCorrectLoginAndPassword(String login, String password);
 }

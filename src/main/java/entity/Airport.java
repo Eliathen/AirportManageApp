@@ -1,10 +1,32 @@
 package entity;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "Airport")
 public class Airport {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "address")
     private String address;
+    @Column(name = "city")
     private String city;
+    @OneToMany(mappedBy = "initialAirport", cascade={CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+//    @JoinColumn(name = "initialFlightId")
+    private List<Flight> initialFlights;
+    @OneToMany(mappedBy = "finalAirport", cascade={CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+//    @JoinColumn(name = "finalFlightId")
+    private List<Flight> finalFlights;
+
+    public Airport() {
+    }
 
     public Airport(int id, String name, String address, String city) {
         this.id = id;

@@ -1,23 +1,45 @@
 package entity;
 
-public class Ticket {
-    private Long id;
-    private Long flightNumber;
-    private Long luggageId;
-    private Long passangerId;
 
-    public Ticket(Long id, Long flightNumber, Long luggageId, Long passangerId){
+import javax.persistence.*;
+import java.util.List;
+@Entity
+@Table(name = "Ticket")
+public class Ticket {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "flightNumber")
+    private Long flightNumber;
+    @ManyToMany
+    @JoinTable(
+            name = "ticket_luggage",
+            joinColumns=@JoinColumn(name="ticketid"),
+            inverseJoinColumns = @JoinColumn(name = "luggagecode")
+    )
+    private List<Luggage> luggages;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                          CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "passengerid")
+    private Passenger passenger;
+
+    public Ticket(){
+
+    }
+    public Ticket(Long id, Long flightNumber, List<Luggage> luggages, Passenger passanger){
         this.id = id;
         this.flightNumber = flightNumber;
-        this.luggageId = luggageId;
-        this.passangerId = passangerId;
+        this.luggages = luggages;
+        this.passenger = passanger;
 
     }
 
-    public Ticket(Long flightNumber, Long luggageId, Long passangerId) {
+    public Ticket(Long flightNumber, List<Luggage> luggage, Passenger passanger) {
         this.flightNumber = flightNumber;
-        this.luggageId = luggageId;
-        this.passangerId = passangerId;
+        this.luggages = luggages;
+        this.passenger = passanger;
+
     }
 
     public Long getId(){
@@ -26,21 +48,21 @@ public class Ticket {
     public Long getFlightNumber(){
         return flightNumber;
     }
-    public Long getLuggageId(){
-        return luggageId;
+    public List<Luggage> getLuggage(){
+        return luggages;
     }
-    public Long getPassangerId(){
-        return passangerId;
+    public Passenger getPassanger(){
+        return passenger;
     }
 
     @Override
     public String toString() {
-        return "TicketDao{" +
+        return "Ticket{" +
                 "id=" + id +
                 ", flightNumber=" + flightNumber +
-                ", luggageId=" + luggageId +
-                ", passangerId=" + passangerId +
-                '}' ;
+                ", luggage=" + luggages +
+                ", passenger=" + passenger +
+                '}';
     }
 }
 

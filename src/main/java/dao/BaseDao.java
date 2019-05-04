@@ -1,35 +1,68 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import entity.*;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-public class BaseDao {
+public abstract class BaseDao {
 
-    protected Connection connection;
-    protected Statement statement;
-    public static final String DRIVER = "org.h2.Driver";
-    public static final String DB_URL = "jdbc:h2:tcp://localhost/~/Airport";
-    protected final String user = "admin";
-    protected final String password = "";
+    protected Session currentSession;
+    protected Transaction currentTransaction;
 
     public BaseDao() {
-        init();
     }
-
-    public void init() {
+    public Session openCurrentSession(){
         try {
-            Class.forName(DRIVER);
-        } catch (Exception e) {
+            currentSession = getSessionFactory().openSession();
+            return currentSession;
+        }catch(HibernateException e){
             e.printStackTrace();
         }
+        return currentSession;
+    }
+    public void closeCurrentSession(){
+        currentSession.close();
+    }
 
+    public Session getCurrentSession() {
+        return currentSession;
+    }
+    public Session openCurrentSessionWithTransaction(){
         try {
-            connection = DriverManager.getConnection(DB_URL, user, password);
-            statement = connection.createStatement();
-        } catch (SQLException e) {
+            currentSession = getSessionFactory().openSession();
+            currentTransaction = currentSession.beginTransaction();
+            return currentSession;
+        }catch(HibernateException e){
             e.printStackTrace();
+        }
+        return currentSession;
+    }
+    public void closeCurrentSessionWithTransaction(){
+        currentTransaction.commit();
+        currentSession.close();
+
+    }
+    private static SessionFactory getSessionFactory() {
+        try {
+            SessionFactory sessionFactory = new Configuration()
+                    .configure("hibernate.cfg.xml")
+                    .addAnnotatedClass(Airline.class)
+                    .addAnnotatedClass(Airport.class)
+                    .addAnnotatedClass(Employee.class)
+                    .addAnnotatedClass(Flight.class)
+                    .addAnnotatedClass(Luggage.class)
+                    .addAnnotatedClass(Plane.class)
+                    .addAnnotatedClass(User.class)
+                    .addAnnotatedClass(Passenger.class)
+                    .addAnnotatedClass(Ticket.class)
+                    .buildSessionFactory();
+            return sessionFactory;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 }

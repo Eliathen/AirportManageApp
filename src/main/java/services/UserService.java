@@ -15,28 +15,28 @@ public class UserService {
     }
 
     public void saveUser(User user) throws LoginAlreadyExistException {
-        userDao.openCurrentSessionwithTransaction();
+        userDao.openCurrentSessionWithTransaction();
         userDao.saveUser(user);
-        userDao.closeCurrentSessionwithTransaction();
+        userDao.closeCurrentSessionWithTransaction();
     }
     public void removeUserById(Long userId){
-        userDao.openCurrentSessionwithTransaction();
+        userDao.openCurrentSessionWithTransaction();
         userDao.removeUserById(userId);
-        userDao.closeCurrentSessionwithTransaction();
+        userDao.closeCurrentSessionWithTransaction();
     }
     public void removeUserByLogin(String login){
-        userDao.openCurrentSessionwithTransaction();
+        userDao.openCurrentSessionWithTransaction();
         userDao.removeUserByLogin(login);
-        userDao.closeCurrentSessionwithTransaction();
+        userDao.closeCurrentSessionWithTransaction();
     }
     public void updateUser(User user){
-        userDao.openCurrentSessionwithTransaction();
+        userDao.openCurrentSessionWithTransaction();
         userDao.updateUser(user);
-        userDao.closeCurrentSessionwithTransaction();
+        userDao.closeCurrentSessionWithTransaction();
     }
-    public boolean isCorrentLoginAndPassword(String login, String password){
+    public boolean isCorrectLoginAndPassword(String login, String password){
         userDao.openCurrentSession();
-        boolean result = userDao.isCorrentLoginAndPassword(login, password);
+        boolean result = userDao.isCorrectLoginAndPassword(login, password);
         userDao.closeCurrentSession();
         return result;
     }

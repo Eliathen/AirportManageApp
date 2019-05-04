@@ -9,71 +9,12 @@ import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.query.Query;
 import exceptions.LoginAlreadyExistException;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao implements UserDaoInterface {
-    private Session currentSession;
-    private Transaction currentTransaction;
+public class UserDao extends BaseDao implements UserDaoInterface {
 
     public UserDao(){
-    }
-    public Session openCurrentSession(){
-        try {
-            currentSession = getSessionFactory().openSession();
-            return currentSession;
-        }catch(HibernateException e){
-            e.printStackTrace();
-        }
-        return currentSession;
-    }
-    public Session openCurrentSessionwithTransaction(){
-        try {
-            currentSession = getSessionFactory().openSession();
-            currentTransaction = currentSession.beginTransaction();
-            return currentSession;
-        }catch(HibernateException e){
-            e.printStackTrace();
-        }
-        return currentSession;
-    }
-    private static SessionFactory getSessionFactory() {
-        try {
-            SessionFactory sessionFactory = new Configuration()
-                    .configure("hibernate.cfg.xml")
-                    .addAnnotatedClass(User.class)
-                    .buildSessionFactory();
-            return sessionFactory;
-        }catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-    public void closeCurrentSession(){
-        currentSession.close();
-    }
-
-    public Session getCurrentSession() {
-        return currentSession;
-    }
-
-    public void setCurrentSession(Session currentSession) {
-        this.currentSession = currentSession;
-    }
-
-    public Transaction getCurrentTransaction() {
-        return currentTransaction;
-    }
-
-    public void setCurrentTransaction(Transaction currentTransaction) {
-        this.currentTransaction = currentTransaction;
-    }
-
-    public void closeCurrentSessionwithTransaction(){
-        currentTransaction.commit();
-        currentSession.close();
-
     }
     public User getById(Long id){
         Query query = currentSession.createQuery("From User where id=:id");
@@ -84,7 +25,7 @@ public class UserDao implements UserDaoInterface {
     }
 
     public User getByLogin(String login){
-        Query query = currentSession.createQuery("From User where login=:login");
+        Query query = currentSession.createQuery("From User where login =: login");
         query.setParameter("login", login);
         User user = (User) query.uniqueResult();
         return user;
@@ -117,7 +58,7 @@ public class UserDao implements UserDaoInterface {
 
         getCurrentSession().update(user);
     }
-    public boolean isCorrentLoginAndPassword(String login, String password){
+    public boolean isCorrectLoginAndPassword(String login, String password){
         User user = getByLogin(login);
         if(user == null){
             return false;

@@ -1,18 +1,17 @@
-DROP TABLE USER;
-DROP TABLE AIRPORT;
-DROP TABLE AIRLINE;
-DROP TABLE EMPLOYEE;
-DROP TABLE LUGGAGE;
-DROP TABLE PASSENGER;
-DROP TABLE PLANE;
-DROP TABLE TICKET;
-DROP TABLE FLIGHT;
+DROP TABLE USER CASCADE CONSTRAINTS;
+DROP TABLE AIRPORT CASCADE CONSTRAINTS;
+DROP TABLE AIRLINE CASCADE CONSTRAINTS;
+DROP TABLE EMPLOYEE CASCADE CONSTRAINTS;
+DROP TABLE LUGGAGE CASCADE CONSTRAINTS;
+DROP TABLE PASSENGER CASCADE CONSTRAINTS;
+DROP TABLE PLANE CASCADE CONSTRAINTS;
+DROP TABLE TICKET CASCADE CONSTRAINTS;
+DROP TABLE FLIGHT CASCADE CONSTRAINTS;
 
-CREATE TABLE IF NOT EXISTS USER
-(
-  id number auto_increment primary key ,
-  login varchar2(50) unique ,
-  password varchar2(30) not null
+CREATE TABLE IF NOT EXISTS USER(
+                                id number auto_increment primary key ,
+                                login varchar2(50) unique not null,
+                                password varchar2(30) not null
 );
 
 CREATE TABLE IF NOT EXISTS AIRPORT(
@@ -25,7 +24,7 @@ CREATE TABLE IF NOT EXISTS AIRLINE(
                                     id number PRIMARY KEY AUTO_INCREMENT,
                                     name varchar2(50) not null,
                                     country varchar2(30) not null,
-                                    otherDatails varchar2(150)
+                                    otherDetails varchar2(150)
 );
 CREATE TABLE IF NOT EXISTS EMPLOYEE(
                                      id number PRIMARY KEY AUTO_INCREMENT,
@@ -37,9 +36,7 @@ CREATE TABLE IF NOT EXISTS EMPLOYEE(
                                      airlineId number,
                                      FOREIGN KEY (id) REFERENCES AIRLINE(id)
 );
-
 CREATE TABLE IF NOT EXISTS LUGGAGE(
-                                    id number primary key AUTO_INCREMENT,
                                     code varchar2(10) unique not null,
                                     weight number(4,2) not null,
                                     height number(3) not null
@@ -50,29 +47,42 @@ CREATE TABLE IF NOT EXISTS PASSENGER(
                                       surname varchar2(50) not null,
                                       pesel varchar2(11) unique not null,
 );
-
 CREATE TABLE IF NOT EXISTS PLANE(
                                   id number primary key AUTO_INCREMENT,
                                   registrationNumber varchar2(10) not null,
                                   modelNumber number not null,
                                   name varchar2(30) not null,
                                   capacity number not null ,
-                                  weight number
-);
-
-CREATE TABLE IF NOT EXISTS TICKET(
-                                   id number primary key AUTO_INCREMENT,
-                                   flightNumber number not null,
-                                   luggageId number not null ,
-                                   passengerId number not null,
-                                   FOREIGN KEY(luggageId) REFERENCES LUGGAGE(id),
-                                   FOREIGN KEY (passengerId) REFERENCES PASSENGER(id)
+                                  weight number,
+                                  airlineId number,
+                                  FOREIGN KEY (airlineId) REFERENCES AIRLINE(id)
 );
 CREATE TABLE IF NOT EXISTS FLIGHT(
                                    id number PRIMARY KEY AUTO_INCREMENT,
-                                   initialAirlineId number not null,
-                                   finalAirlineId number not null,
+                                   initialAirportId number not null,
+                                   finalAirportId number not null,
                                    initialDate Date not null,
-                                   FOREIGN KEY (initialAirlineId) REFERENCES AIRPORT(id),
-                                   FOREIGN KEY (finalAirlineId) REFERENCES AIRPORT(id)
+                                   planeId number,
+                                   FOREIGN KEY (planeId) REFERENCES PLANE(id),
+                                   FOREIGN KEY (initialAirportId) REFERENCES AIRPORT(id),
+                                   FOREIGN KEY (finalAirportId) REFERENCES AIRPORT(id)
+);
+CREATE TABLE IF NOT EXISTS TICKET(
+                                   id number primary key AUTO_INCREMENT,
+                                   flightNumber number not null,
+                                   passengerId number not null,
+                                   FOREIGN KEY (flightNumber) REFERENCES FLIGHT(id),
+                                   FOREIGN KEY (passengerId) REFERENCES PASSENGER(id)
+);
+CREATE TABLE IF NOT EXISTS TICKET_LUGGAGE(
+                                           ticketId number not null,
+                                           luggageCode varchar2(10) not null,
+                                           FOREIGN KEY (ticketId) REFERENCES TICKET(id),
+                                           FOREIGN KEY (luggageCode) REFERENCES LUGGAGE(code)
+);
+CREATE TABLE IF NOT EXISTS FLIGHT_EMPLOYEE(
+                              flightId number not null,
+                              employeeId number not null,
+                              FOREIGN KEY (flightId) REFERENCES FLIGHT(id),
+                              FOREIGN KEY (employeeId) REFERENCES EMPLOYEE(id)
 );
