@@ -1,21 +1,23 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
 @Table(name = "Luggage")
 public class Luggage {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column(name = "code")
     private String code;
     @Column(name = "weight")
     private Float weight;
     @Column(name = "height")
     private Integer height;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH
+            }
+    )
     @JoinTable(
             name = "ticket_luggage",
             joinColumns=@JoinColumn(name="luggagecode"),
@@ -25,23 +27,10 @@ public class Luggage {
     public Luggage() {
     }
 
-    public Luggage(Long id, String code, Float weight, Integer height, List<Ticket> tickets) {
-        this.id = id;
+    public Luggage(String code, Float weight, Integer height) {
         this.code = code;
         this.weight = weight;
         this.height = height;
-        this.tickets = tickets;
-    }
-
-    public Luggage(String code, Float weight, Integer height, List<Ticket> tickets) {
-        this.code = code;
-        this.weight = weight;
-        this.height = height;
-        this.tickets = tickets;
-    }
-
-    public Long getId() {
-        return id;
     }
     public String getCode(){return code;}
     public Float getWeight() {
@@ -59,14 +48,21 @@ public class Luggage {
         this.tickets = tickets;
     }
 
+    public void addTicket(Ticket ticket){
+        if(tickets == null){
+            tickets = new LinkedList<Ticket>();
+        }
+        else{
+            tickets.add(ticket);
+        }
+    }
+
     @Override
     public String toString() {
         return "Luggage{" +
-                "id=" + id +
                 ", code='" + code + '\'' +
                 ", weight=" + weight +
                 ", height=" + height +
-                ", tickets=" + tickets +
                 '}';
     }
 }

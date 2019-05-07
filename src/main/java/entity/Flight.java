@@ -5,6 +5,7 @@ import sun.util.resources.LocaleData;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -32,6 +33,8 @@ public class Flight {
             inverseJoinColumns = @JoinColumn(name = "employeeId")
     )
     private List<Employee> employees;
+    @OneToMany(mappedBy = "ticket", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Ticket> tickets;
 
     public Flight()
     {
@@ -98,6 +101,22 @@ public class Flight {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+    public void addTicket(Ticket ticket){
+        if(tickets == null){
+            tickets = new LinkedList<Ticket>();
+
+        }else{
+            tickets.add(ticket);
+        }
     }
 
     @Override

@@ -2,16 +2,17 @@ package api;
 
 import entity.Luggage;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface LuggageDao {
+public interface LuggageDaoInterface extends Serializable {
     void saveLuggage(Luggage luggage);
-
-    void removeLuggageById(Long id);
 
     void removeLuggageByCode(String code);
 
     void updateLuggage(Luggage luggage);
+
+    Luggage getLuggageByCode(String code);
 
     List<Luggage> getAllLuggage();
 }

@@ -2,6 +2,7 @@ package entity;
 
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 @Entity
 @Table(name = "Ticket")
@@ -10,16 +11,17 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "flightNumber")
-    private Long flightNumber;
-    @ManyToMany
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "FlightNumber")
+    private Flight flight;
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "ticket_luggage",
             joinColumns=@JoinColumn(name="ticketid"),
             inverseJoinColumns = @JoinColumn(name = "luggagecode")
     )
     private List<Luggage> luggages;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                           CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "passengerid")
     private Passenger passenger;
@@ -27,16 +29,16 @@ public class Ticket {
     public Ticket(){
 
     }
-    public Ticket(Long id, Long flightNumber, List<Luggage> luggages, Passenger passanger){
+    public Ticket(Long id, Flight flight, List<Luggage> luggages, Passenger passanger){
         this.id = id;
-        this.flightNumber = flightNumber;
+        this.flight = flight;
         this.luggages = luggages;
         this.passenger = passanger;
 
     }
 
-    public Ticket(Long flightNumber, List<Luggage> luggage, Passenger passanger) {
-        this.flightNumber = flightNumber;
+    public Ticket(Flight flight, List<Luggage> luggage, Passenger passanger) {
+        this.flight = flight;
         this.luggages = luggages;
         this.passenger = passanger;
 
@@ -45,8 +47,8 @@ public class Ticket {
     public Long getId(){
         return id;
     }
-    public Long getFlightNumber(){
-        return flightNumber;
+    public Flight getFlightNumber(){
+        return flight;
     }
     public List<Luggage> getLuggage(){
         return luggages;
@@ -55,11 +57,38 @@ public class Ticket {
         return passenger;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setFlightNumber(Flight flight) {
+        this.flight = flight;
+    }
+
+    public List<Luggage> getLuggages() {
+        return luggages;
+    }
+
+    public void setLuggages(List<Luggage> luggages) {
+        this.luggages = luggages;
+    }
+
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
+    }
+    public void addLuggage(Luggage luggage){
+        if(luggages == null){
+            luggages = new LinkedList<Luggage>();
+        }else{
+            luggages.add(luggage);
+        }
+    }
+
     @Override
     public String toString() {
         return "Ticket{" +
                 "id=" + id +
-                ", flightNumber=" + flightNumber +
+                ", flight=" + flight +
                 ", luggage=" + luggages +
                 ", passenger=" + passenger +
                 '}';

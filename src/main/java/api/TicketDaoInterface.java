@@ -4,14 +4,14 @@ import entity.Ticket;
 
 import java.util.List;
 
-public interface TicketDao {
+public interface TicketDaoInterface {
 
-        void saveEmplyee(Ticket ticket);
+        void saveTicket(Ticket ticket);
 
         void removeTicketById(Long id);
 
         List<Ticket> getAllTicket();
         List<Ticket> getAllTicketByPassangerId(Long id);
 
-        void updateFlight(Ticket ticket);
+        void updateTicket(Ticket ticket);
 }

@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS EMPLOYEE(
                                      FOREIGN KEY (id) REFERENCES AIRLINE(id)
 );
 CREATE TABLE IF NOT EXISTS LUGGAGE(
-                                    code varchar2(10) unique not null,
+                                    code varchar2(10) PRIMARY KEY not null,
                                     weight number(4,2) not null,
                                     height number(3) not null
 );

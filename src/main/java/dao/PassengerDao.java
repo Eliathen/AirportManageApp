@@ -47,10 +47,10 @@ public class PassengerDao extends BaseDao implements PassengerDaoInterface {
     }
 
     public boolean isPassengerAlreadyExists(String pesel){
-        if(getByPesel(pesel)!=null){
-            return true;
+        if(getByPesel(pesel).getId()==null){
+            return false;
         }
-        return false;
+        return true;
     }
     @SuppressWarnings("unchecked")
     public List<Passenger> getAllPassenger(){

@@ -5,10 +5,14 @@ import java.util.Scanner;
 import api.*;
 import dao.PassengerDao;
 import dao.UserDao;
+import entity.Luggage;
 import entity.Passenger;
+import entity.Ticket;
 import entity.User;
 import exceptions.LoginAlreadyExistException;
+import services.LuggageService;
 import services.PassengerService;
+import services.TicketService;
 import services.UserService;
 import sun.java2d.pipe.SolidTextRenderer;
 
@@ -67,12 +71,21 @@ public class runApp {
 //        }
 
         PassengerService pass = new PassengerService();
-        //Passenger passenger = new Passenger("Tomasz", "Nowak", "99999999999");
-         //pass.savePassenger(passenger);
+//        Passenger passenger = new Passenger("Tomasz", "Kowalski", "99999999999");
+//        pass.savePassenger(passenger);
 //       List<Passenger> passengers = pass.getAllPassenger();
 //       System.out.println(passengers);
-       Passenger passenger1 = pass.getPassengerByPesel("99999999999");
-       System.out.println(passenger1);
+        Passenger passenger = pass.getPassengerByPesel("99999999999");
+       LuggageService luggageService = new LuggageService();
+       Luggage luggage1 = new Luggage("A2", 24f, 75);
+       luggageService.saveLuggage(luggage1);
+        TicketService ticketService = new TicketService();
+        Ticket ticket1 = new Ticket();
+        ticket1.setPassenger(passenger);
+        ticket1.addLuggage(luggage1);
+        ticketService.saveTicket(ticket1);
+//       Passenger passenger1 = pass.getPassengerByPesel("99999999999");
+//       System.out.println(passenger1);
 //        for (Passenger passek : passengers){
 //            System.out.println(passek);
 //        }
