@@ -6,7 +6,7 @@ import sun.util.resources.LocaleData;
 
 import java.util.List;
 
-public interface FlightDao {
+public interface FlightDaoInterface {
     void saveFlight(Flight flight);
 
     void removeFlightById(Long id);

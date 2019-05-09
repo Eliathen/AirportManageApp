@@ -9,8 +9,8 @@ import org.hibernate.cfg.Configuration;
 
 public abstract class BaseDao {
 
-    protected Session currentSession;
-    protected Transaction currentTransaction;
+    private Session currentSession;
+    private Transaction currentTransaction;
 
     public BaseDao() {
     }

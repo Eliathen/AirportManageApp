@@ -30,7 +30,7 @@ public class LuggageDao extends BaseDao implements LuggageDaoInterface {
     }
     public Luggage getLuggageByCode(String code){
         try {
-            Query query = currentSession.createQuery("FROM Luggage WHERE code =: code");
+            Query query = getCurrentSession().createQuery("FROM Luggage WHERE code =: code");
             query.setParameter("code", code);
             Luggage luggage = (Luggage) query.uniqueResult();
             return luggage;
@@ -41,16 +41,16 @@ public class LuggageDao extends BaseDao implements LuggageDaoInterface {
 
     public void removeLuggageByCode(String code){
         Luggage luggage = getLuggageByCode(code);
-        currentSession.delete(luggage);
+        getCurrentSession().delete(luggage);
     }
 
     public void updateLuggage(Luggage luggage){
-        currentSession.update(luggage);
+        getCurrentSession().update(luggage);
     }
 
     public List<Luggage> getAllLuggage(){
         try{
-            Query query = currentSession.createQuery("From Luggage");
+            Query query = getCurrentSession().createQuery("From Luggage");
             List<Luggage> luggages = query.getResultList();
             return luggages;
         }catch(NullPointerException e){

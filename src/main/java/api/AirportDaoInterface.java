@@ -3,7 +3,7 @@ package api;
 import entity.Airport;
 import java.util.List;
 
-public interface AirportDao {
+public interface AirportDaoInterface {
     void saveAirport(Airport airport);
 
     void removeAirportById(Long id);

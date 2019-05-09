@@ -9,7 +9,7 @@ public class Airport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "address")
@@ -28,7 +28,7 @@ public class Airport {
     public Airport() {
     }
 
-    public Airport(int id, String name, String address, String city) {
+    public Airport(Long id, String name, String address, String city) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -40,7 +40,7 @@ public class Airport {
         this.address = address;
         this.city = city;
     }
-    public int getId(){ return id; }
+    public Long getId(){ return id; }
     public String getName(){
         return name;
     }

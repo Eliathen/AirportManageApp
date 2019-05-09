@@ -33,8 +33,6 @@ public class Flight {
             inverseJoinColumns = @JoinColumn(name = "employeeId")
     )
     private List<Employee> employees;
-    @OneToMany(mappedBy = "ticket", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    private List<Ticket> tickets;
 
     public Flight()
     {
@@ -103,21 +101,6 @@ public class Flight {
         this.employees = employees;
     }
 
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-    public void addTicket(Ticket ticket){
-        if(tickets == null){
-            tickets = new LinkedList<Ticket>();
-
-        }else{
-            tickets.add(ticket);
-        }
-    }
 
     @Override
     public String toString() {

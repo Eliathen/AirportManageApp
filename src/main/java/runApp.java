@@ -5,15 +5,9 @@ import java.util.Scanner;
 import api.*;
 import dao.PassengerDao;
 import dao.UserDao;
-import entity.Luggage;
-import entity.Passenger;
-import entity.Ticket;
-import entity.User;
+import entity.*;
 import exceptions.LoginAlreadyExistException;
-import services.LuggageService;
-import services.PassengerService;
-import services.TicketService;
-import services.UserService;
+import services.*;
 import sun.java2d.pipe.SolidTextRenderer;
 
 public class runApp {
@@ -69,25 +63,27 @@ public class runApp {
 //        }else{
 //            System.out.println("Incorrent Login or Password");
 //        }
+//         LuggageService luggageService = new LuggageService();
+//         Luggage luggage = luggageService.getLuggageByCode("A1");
+//         System.out.println(luggage);
+//         PassengerService passengerService = new PassengerService();
+//         Passenger passenger = passengerService.getPassengerByPesel("99999999999");
+//         System.out.println(passenger);
+//         TicketService ticketService = new TicketService();
+//         Ticket ticket = new Ticket();
+//         ticket.addLuggage(luggage);
+//         ticket.setPassenger(passenger);
+//         Luggage luggage2 = luggageService.getLuggageByCode("A3");
+//         ticket.addLuggage(luggage2);
+//         System.out.println(ticket);
+//            Airline airline = new Airline("Lotnisko", "Country","Empty");
+        AirlineService airlineService = new AirlineService();
+//        System.out.println(airline);
+//        airlineService.saveAirline(airline);
+        Airline airline = airlineService.getAirlineById(1l);
+        airline.setCountry("Germany");
+        airline.setDetails("The best airline in the world");
+        airlineService.updateAirline(airline);
 
-        PassengerService pass = new PassengerService();
-//        Passenger passenger = new Passenger("Tomasz", "Kowalski", "99999999999");
-//        pass.savePassenger(passenger);
-//       List<Passenger> passengers = pass.getAllPassenger();
-//       System.out.println(passengers);
-        Passenger passenger = pass.getPassengerByPesel("99999999999");
-       LuggageService luggageService = new LuggageService();
-       Luggage luggage1 = new Luggage("A2", 24f, 75);
-       luggageService.saveLuggage(luggage1);
-        TicketService ticketService = new TicketService();
-        Ticket ticket1 = new Ticket();
-        ticket1.setPassenger(passenger);
-        ticket1.addLuggage(luggage1);
-        ticketService.saveTicket(ticket1);
-//       Passenger passenger1 = pass.getPassengerByPesel("99999999999");
-//       System.out.println(passenger1);
-//        for (Passenger passek : passengers){
-//            System.out.println(passek);
-//        }
     }
 }

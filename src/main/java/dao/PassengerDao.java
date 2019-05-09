@@ -22,10 +22,10 @@ public class PassengerDao extends BaseDao implements PassengerDaoInterface {
     }
     public void removePassengerById(Long Id){
         Passenger passenger = getById(Id);
-        currentSession.delete(passenger);
+        getCurrentSession().delete(passenger);
     }
     public Passenger getById(Long Id){
-        Query query =currentSession.createQuery("FROM Passenger WHERE Id =: Id");
+        Query query = getCurrentSession().createQuery("FROM Passenger WHERE Id =: Id");
         query.setParameter("Id", Id);
         Passenger passenger = (Passenger) query.uniqueResult();
         return passenger;
@@ -33,7 +33,7 @@ public class PassengerDao extends BaseDao implements PassengerDaoInterface {
     public Passenger getByPesel(String pesel){
         //System.out.println("getByPesel");
         try {
-            Query query = currentSession.createQuery("FROM Passenger  WHERE pesel =: pesel");
+            Query query = getCurrentSession().createQuery("FROM Passenger  WHERE pesel =: pesel");
             query.setParameter("pesel", pesel);
             Passenger passenger = (Passenger) query.uniqueResult();
             return passenger;
@@ -43,7 +43,7 @@ public class PassengerDao extends BaseDao implements PassengerDaoInterface {
         }
     }
     public void updatePassenger(Passenger passenger){
-        currentSession.update(passenger);
+        getCurrentSession().update(passenger);
     }
 
     public boolean isPassengerAlreadyExists(String pesel){
@@ -55,7 +55,7 @@ public class PassengerDao extends BaseDao implements PassengerDaoInterface {
     @SuppressWarnings("unchecked")
     public List<Passenger> getAllPassenger(){
         try{
-            Query query = currentSession.createQuery("FROM Passenger");
+            Query query = getCurrentSession().createQuery("FROM Passenger");
             List<Passenger> passengers = query.getResultList();
             return passengers;
         }catch(NullPointerException e){
@@ -66,7 +66,7 @@ public class PassengerDao extends BaseDao implements PassengerDaoInterface {
     @SuppressWarnings("unchecked")
     public List<Passenger> getAllPassengerBySurname(String surname){
         try{
-            Query query = currentSession.createQuery("FROM Passanger WHERE surname =: surname");
+            Query query = getCurrentSession().createQuery("FROM Passanger WHERE surname =: surname");
             query.setParameter("surname", surname);
             List<Passenger> passengers = query.getResultList();
             return passengers;

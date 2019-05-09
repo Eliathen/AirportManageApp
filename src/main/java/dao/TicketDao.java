@@ -22,14 +22,14 @@ public class TicketDao extends BaseDao implements TicketDaoInterface {
     public void removeTicketById(Long id){
         try{
             Ticket ticket = getTicketById(id);
-            currentSession.delete(ticket);
+            getCurrentSession().delete(ticket);
         }catch(NullPointerException e){
 
         }
     }
     public Ticket getTicketById(Long id){
         try{
-            Query query = currentSession.createQuery("FROM TICKET WHERE id =: id");
+            Query query = getCurrentSession().createQuery("FROM TICKET WHERE id =: id");
             query.setParameter("id", id);
             Ticket ticket = (Ticket) query.uniqueResult();
             return ticket;
@@ -46,7 +46,7 @@ public class TicketDao extends BaseDao implements TicketDaoInterface {
     }
     public List<Ticket> getAllTicket(){
         try{
-            Query query = currentSession.createQuery("From TICKET");
+            Query query = getCurrentSession().createQuery("From TICKET");
             List<Ticket> tickets = query.getResultList();
             return tickets;
         }catch(NullPointerException e){
@@ -55,7 +55,7 @@ public class TicketDao extends BaseDao implements TicketDaoInterface {
     }
     public List<Ticket> getAllTicketByPassangerId(Long id){
         try{
-            Query query = currentSession.createQuery("From TICKET WHERE PASSANGERID =: id");
+            Query query = getCurrentSession().createQuery("From TICKET WHERE PASSANGERID =: id");
             query.setParameter("id", id);
             List<Ticket> tickets = query.getResultList();
             return tickets;
@@ -66,7 +66,7 @@ public class TicketDao extends BaseDao implements TicketDaoInterface {
 
     public void updateTicket(Ticket ticket){
         if(ticket!=null){
-            currentSession.update(ticket);
+            getCurrentSession().update(ticket);
         }
     }
 }

@@ -17,7 +17,7 @@ public class UserDao extends BaseDao implements UserDaoInterface {
     public UserDao(){
     }
     public User getById(Long id){
-        Query query = currentSession.createQuery("From User where id=:id");
+        Query query = getCurrentSession().createQuery("From User where id=:id");
         query.setParameter("id", id);
         User user = (User) query.uniqueResult();
         System.out.println(user.toString());
@@ -25,7 +25,7 @@ public class UserDao extends BaseDao implements UserDaoInterface {
     }
 
     public User getByLogin(String login){
-        Query query = currentSession.createQuery("From User where login =: login");
+        Query query = getCurrentSession().createQuery("From User where login =: login");
         query.setParameter("login", login);
         User user = (User) query.uniqueResult();
         return user;
@@ -73,7 +73,7 @@ public class UserDao extends BaseDao implements UserDaoInterface {
         try {
             String q = "FROM User";
             Query query;
-            query = currentSession.createQuery(q);
+            query = getCurrentSession().createQuery(q);
             List<User> users = query.getResultList();
             return users;
         }catch (Exception e){

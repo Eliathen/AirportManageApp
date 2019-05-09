@@ -76,9 +76,11 @@ public class Ticket {
     public void setPassenger(Passenger passenger) {
         this.passenger = passenger;
     }
+
     public void addLuggage(Luggage luggage){
         if(luggages == null){
             luggages = new LinkedList<Luggage>();
+            luggages.add(luggage);
         }else{
             luggages.add(luggage);
         }
