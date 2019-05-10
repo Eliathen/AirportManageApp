@@ -1,15 +1,15 @@
 package dao;
 
-import api.AirlineDaoInterface;
 import entity.Airline;
 import org.hibernate.query.Query;
 
 import java.util.LinkedList;
 import java.util.List;
+import api.AirlineDao;
 
-public class AirlineDao extends BaseDao implements AirlineDaoInterface {
+public class AirlineDaoImpl extends BaseDao implements AirlineDao {
 
-    public AirlineDao() {
+    public AirlineDaoImpl() {
 
     }
     public void saveAirline(Airline airline) {

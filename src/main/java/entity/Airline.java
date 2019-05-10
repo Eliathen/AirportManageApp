@@ -19,10 +19,10 @@ public class Airline {
     private String country;
     @Column(name = "otherDetails")
     private String otherDetails;
-    @OneToMany(mappedBy = "airline",
+    @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Employee> employees;
-    @OneToMany(mappedBy = "airline",
+    @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Plane> planes;
 
@@ -105,17 +105,15 @@ public class Airline {
     }
 
     @Override
-    public int hashCode() {
-        return 0;
-    }
-
-    @Override
-    public String toString(){
+    public String toString() {
         return "Airline{" +
-                "id:" + id + "\n"+
-                "name:" + name + "\n"+
-                "country:" + country + "\n"+
-                "otherDetails:" + otherDetails + "\n";
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", otherDetails='" + otherDetails + '\'' +
+                ", employees=" + employees +
+                ", planes=" + planes +
+                '}';
     }
 }
 

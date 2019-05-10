@@ -1,14 +1,8 @@
 import java.lang.String;
 import java.util.List;
-import java.util.Scanner;
 
-import api.*;
-import dao.PassengerDao;
-import dao.UserDao;
 import entity.*;
-import exceptions.LoginAlreadyExistException;
 import services.*;
-import sun.java2d.pipe.SolidTextRenderer;
 
 public class runApp {
 
@@ -80,10 +74,21 @@ public class runApp {
         AirlineService airlineService = new AirlineService();
 //        System.out.println(airline);
 //        airlineService.saveAirline(airline);
+//        Airline airline = airlineService.getAirlineById(1l);
+//        airline.setCountry("Germany");
+//        airline.setDetails("The best airline in the world");
+//        airlineService.updateAirline(airline);
+          List<Airline> airlines = airlineService.getAllAirlines();
+          System.out.println(airlines);
+          System.out.println();
+          PlaneService planeService = new PlaneService();
+//          Plane plane = new Plane("AAB",46, "Samolot2", 220, 2500L);
+//          planeService.savePlane(plane);
+        Plane plane = planeService.getPlaneById(3l);
         Airline airline = airlineService.getAirlineById(1l);
-        airline.setCountry("Germany");
-        airline.setDetails("The best airline in the world");
-        airlineService.updateAirline(airline);
-
+        plane.setAirline(airline);
+        planeService.updatePlane(plane);
+        List<Plane> planes = planeService.getAllPlane();
+        System.out.println(planes);
     }
 }

@@ -2,9 +2,10 @@ package api;
 
 import entity.Ticket;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface TicketDaoInterface {
+public interface TicketDao extends Serializable {
 
         void saveTicket(Ticket ticket);
 

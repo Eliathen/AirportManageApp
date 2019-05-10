@@ -1,15 +1,15 @@
 package services;
 
-import dao.AirlineDao;
+import dao.AirlineDaoImpl;
 import entity.Airline;
 
 import java.util.List;
 
 public class AirlineService {
-    AirlineDao airlineDao;
+    AirlineDaoImpl airlineDao;
 
     public AirlineService(){
-        airlineDao = new AirlineDao();
+        airlineDao = new AirlineDaoImpl();
     }
     public void saveAirline(Airline airline){
         airlineDao.openCurrentSessionWithTransaction();

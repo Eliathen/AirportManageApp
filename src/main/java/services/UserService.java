@@ -1,6 +1,6 @@
 package services;
 
-import dao.UserDao;
+import dao.UserDaoImpl;
 import entity.User;
 import exceptions.LoginAlreadyExistException;
 
@@ -8,10 +8,10 @@ import java.util.List;
 
 
 public class UserService {
-    private static UserDao userDao;
+    private static UserDaoImpl userDao;
 
     public UserService() {
-        userDao = new UserDao();
+        userDao = new UserDaoImpl();
     }
 
     public void saveUser(User user) throws LoginAlreadyExistException {

@@ -1,14 +1,14 @@
 package dao;
-import api.TicketDaoInterface;
 import entity.Ticket;
 import org.hibernate.query.Query;
-;
+
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class TicketDao extends BaseDao implements TicketDaoInterface {
-    public TicketDao() {
+public class TicketDaoImpl extends BaseDao implements api.TicketDao {
+
+    public TicketDaoImpl() {
     }
 
     public void saveTicket(Ticket ticket){
@@ -29,7 +29,7 @@ public class TicketDao extends BaseDao implements TicketDaoInterface {
     }
     public Ticket getTicketById(Long id){
         try{
-            Query query = getCurrentSession().createQuery("FROM TICKET WHERE id =: id");
+            Query query = getCurrentSession().createQuery("FROM ticket WHERE id =: id");
             query.setParameter("id", id);
             Ticket ticket = (Ticket) query.uniqueResult();
             return ticket;

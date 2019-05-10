@@ -1,15 +1,15 @@
 package services;
 
-import dao.AirportDao;
+import dao.AirportDaoImpl;
 import entity.Airport;
 
 import java.util.List;
 
 public class AirportService {
-    private AirportDao airportDao;
+    private AirportDaoImpl airportDao;
 
     public AirportService() {
-        airportDao = new AirportDao();
+        airportDao = new AirportDaoImpl();
     }
     public void saveAirport(Airport airport){
         airportDao.openCurrentSessionWithTransaction();

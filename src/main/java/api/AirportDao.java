@@ -1,9 +1,11 @@
 package api;
 
 import entity.Airport;
+
+import java.io.Serializable;
 import java.util.List;
 
-public interface AirportDaoInterface {
+public interface AirportDao extends Serializable {
     void saveAirport(Airport airport);
 
     void removeAirportById(Long id);

@@ -4,19 +4,22 @@ package api;
 
 import entity.Plane;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface PlaneDao {
+public interface PlaneDao extends Serializable {
 
-        void saveEmplyee(Plane plane);
+        void savePlane(Plane plane);
 
         void removePlaneById(Long id);
 
-        List<Plane> getPlaneByModelNumber(Integer modelNumner);
+        Plane getPlaneById(Long id);
+
+        List<Plane> getPlaneByModelNumber(Integer modelNumber);
 
         List<Plane> getAllPlane();
 
         List<Plane> getPlaneByCapacity(Integer capacity);
 
-        void updateFlight(Plane plane);
+        void updatePlane(Plane plane);
 }

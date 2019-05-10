@@ -5,7 +5,7 @@ import entity.Passenger;
 import java.io.Serializable;
 import java.util.List;
 
-public interface PassengerDaoInterface extends Serializable {
+public interface PassengerDao extends Serializable {
 
     void savePassenger(Passenger passenger);
 

@@ -1,15 +1,13 @@
 package dao;
 
-import api.AirportDaoInterface;
 import entity.Airport;
-import org.hibernate.NonUniqueObjectException;
 import org.hibernate.query.Query;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class AirportDao extends BaseDao implements AirportDaoInterface {
-    public AirportDao() {
+public class AirportDaoImpl extends BaseDao implements api.AirportDao {
+    public AirportDaoImpl() {
     }
 
     public void saveAirport(Airport airport){

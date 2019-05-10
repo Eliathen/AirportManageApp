@@ -1,15 +1,15 @@
 package services;
 
-import dao.PassengerDao;
+import dao.PassengerDaoImpl;
 import entity.Passenger;
 
 import java.util.List;
 
 public class PassengerService {
-    private PassengerDao passengerDao;
+    private PassengerDaoImpl passengerDao;
 
     public PassengerService() {
-        this.passengerDao = new PassengerDao();
+        this.passengerDao = new PassengerDaoImpl();
     }
     public void savePassenger(Passenger passenger){
         passengerDao.openCurrentSessionWithTransaction();

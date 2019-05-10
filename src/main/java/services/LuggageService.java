@@ -1,15 +1,15 @@
 package services;
 
-import dao.LuggageDao;
+import dao.LuggageDaoImpl;
 import entity.Luggage;
 
 import java.util.List;
 
 public class LuggageService {
-    private LuggageDao luggageDao;
+    private LuggageDaoImpl luggageDao;
 
     public LuggageService(){
-        this.luggageDao = new LuggageDao();
+        this.luggageDao = new LuggageDaoImpl();
 
     }
     public void saveLuggage(Luggage luggage){

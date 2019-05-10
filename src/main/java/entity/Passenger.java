@@ -16,7 +16,7 @@ public class Passenger {
     protected String surname;
     @Column(name = "pesel")
     protected String pesel;
-    @OneToMany(mappedBy = "passenger",
+    @OneToMany(mappedBy = "passenger", fetch = FetchType.LAZY,
                 cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     protected List<Ticket> tickets;
 

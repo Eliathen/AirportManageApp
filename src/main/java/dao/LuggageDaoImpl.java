@@ -1,6 +1,5 @@
 package dao;
 
-import api.LuggageDaoInterface;
 import entity.Luggage;
 import org.hibernate.query.Query;
 
@@ -8,9 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class LuggageDao extends BaseDao implements LuggageDaoInterface {
+public class LuggageDaoImpl extends BaseDao implements api.LuggageDao {
 
-    public LuggageDao(){
+    public LuggageDaoImpl(){
 
     }
 

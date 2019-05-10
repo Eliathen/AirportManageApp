@@ -4,9 +4,10 @@ import entity.Airline;
 import entity.Flight;
 import sun.util.resources.LocaleData;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface FlightDaoInterface {
+public interface FlightDao extends Serializable {
     void saveFlight(Flight flight);
 
     void removeFlightById(Long id);

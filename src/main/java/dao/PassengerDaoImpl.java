@@ -1,14 +1,13 @@
 package dao;
 
-
-import api.PassengerDaoInterface;
+import api.PassengerDao;
 import entity.Passenger;
 import org.hibernate.query.Query;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class PassengerDao extends BaseDao implements PassengerDaoInterface {
+public class PassengerDaoImpl extends BaseDao implements PassengerDao {
 
     public void savePassenger(Passenger passenger){
         if(!isPassengerAlreadyExists(passenger.getPesel())){
@@ -24,9 +23,9 @@ public class PassengerDao extends BaseDao implements PassengerDaoInterface {
         Passenger passenger = getById(Id);
         getCurrentSession().delete(passenger);
     }
-    public Passenger getById(Long Id){
+    public Passenger getById(Long id){
         Query query = getCurrentSession().createQuery("FROM Passenger WHERE Id =: Id");
-        query.setParameter("Id", Id);
+        query.setParameter("Id", id);
         Passenger passenger = (Passenger) query.uniqueResult();
         return passenger;
     }
@@ -74,6 +73,4 @@ public class PassengerDao extends BaseDao implements PassengerDaoInterface {
             return new LinkedList<Passenger>();
         }
     }
-
-
 }

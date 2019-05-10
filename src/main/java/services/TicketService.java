@@ -1,15 +1,15 @@
 package services;
 
-import dao.TicketDao;
+import dao.TicketDaoImpl;
 import entity.Ticket;
 
 import java.util.List;
 
 public class TicketService {
-    private TicketDao ticketDao;
+    private TicketDaoImpl ticketDao;
 
     public TicketService() {
-        this.ticketDao = new TicketDao();
+        this.ticketDao = new TicketDaoImpl();
     }
     public void saveTicket(Ticket ticket){
         ticketDao.openCurrentSessionWithTransaction();

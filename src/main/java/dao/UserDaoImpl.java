@@ -1,20 +1,15 @@
 package dao;
 
-import api.UserDaoInterface;
 import entity.User;
 import exceptions.LoginAlreadyExistException;
-import org.hibernate.*;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.query.Query;
-import exceptions.LoginAlreadyExistException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao extends BaseDao implements UserDaoInterface {
+public class UserDaoImpl extends BaseDao implements api.UserDao {
 
-    public UserDao(){
+    public UserDaoImpl(){
     }
     public User getById(Long id){
         Query query = getCurrentSession().createQuery("From User where id=:id");

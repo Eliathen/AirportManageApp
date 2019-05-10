@@ -5,7 +5,7 @@ import entity.Luggage;
 import java.io.Serializable;
 import java.util.List;
 
-public interface LuggageDaoInterface extends Serializable {
+public interface LuggageDao extends Serializable {
     void saveLuggage(Luggage luggage);
 
     void removeLuggageByCode(String code);

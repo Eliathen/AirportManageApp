@@ -19,7 +19,7 @@ public class Plane {
     private Integer capacity;
     @Column(name = "weight")
     private Long weight;
-    @OneToMany(mappedBy = "plane", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "plane",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Flight> flights;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "airlineId")
@@ -63,15 +63,57 @@ public class Plane {
         return weight;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
+    }
+
+    public void setModelNumber(Integer modelNumber) {
+        this.modelNumber = modelNumber;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setWeight(Long weight) {
+        this.weight = weight;
+    }
+
+    public List<Flight> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(List<Flight> flights) {
+        this.flights = flights;
+    }
+
+    public Airline getAirline() {
+        return airline;
+    }
+
+    public void setAirline(Airline airline) {
+        this.airline = airline;
+    }
+
     @Override
     public String toString() {
-        return "PlaneDao{" +
+        return "Plane{" +
                 "id=" + id +
                 ", registrationNumber='" + registrationNumber + '\'' +
                 ", modelNumber=" + modelNumber +
                 ", name='" + name + '\'' +
                 ", capacity=" + capacity +
                 ", weight=" + weight +
-                '}' ;
+                ", flights=" + flights +
+                ", airline=" + airline +
+                '}';
     }
 }

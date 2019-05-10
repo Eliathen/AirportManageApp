@@ -1,10 +1,12 @@
 package api;
 
 import entity.Airline;
+
+import java.io.Serializable;
 import java.util.List;
 
 
-public interface AirlineDaoInterface {
+public interface AirlineDao extends Serializable {
     void saveAirline(Airline airline);
 
     void removeAirlineById(Long id);
