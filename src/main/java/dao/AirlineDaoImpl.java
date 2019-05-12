@@ -13,21 +13,7 @@ public class AirlineDaoImpl extends BaseDao implements AirlineDao {
 
     }
     public void saveAirline(Airline airline) {
-        if(!isAirlineAlreadyExists(airline.getId())){
             getCurrentSession().save(airline);
-        }else{
-            //Jesli linia juz istnieje
-        }
-    }
-    private boolean isAirlineAlreadyExists(Long id){
-        try {
-            if (getAirlineById(id).getName() != null) {
-                return true;
-            }
-        }catch(NullPointerException e){
-            return false;
-        }
-        return false;
     }
 
     public Airline getAirlineById(Long id) {
@@ -40,7 +26,26 @@ public class AirlineDaoImpl extends BaseDao implements AirlineDao {
             return new Airline();
         }
     }
-
+    public Airline getPlanes(Airline airline){
+        try{
+            Query query = getCurrentSession().createQuery("FROM Plane where id=: id");
+            query.setParameter("id", airline.getId());
+            airline.setPlanes(query.getResultList());
+            return airline;
+        }catch(NullPointerException e){
+            return airline;
+        }
+    }
+    public Airline getEmployees(Airline airline){
+        try{
+            Query query = getCurrentSession().createQuery("FROM Employee where id=: id");
+            query.setParameter("id", airline.getId());
+            airline.setEmployees(query.getResultList());
+            return airline;
+        }catch(NullPointerException e){
+            return airline;
+        }
+    }
     public void removeAirlineById(Long id) {
         Airline airline = getAirlineById(id);
         getCurrentSession().delete(airline);

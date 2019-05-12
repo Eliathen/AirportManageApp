@@ -30,6 +30,13 @@ public class PlaneService {
         planeDao.closeCurrentSession();
         return planes;
     }
+    public Plane getPlaneByIdWithFlight(Long id){
+        planeDao.openCurrentSession();
+        Plane plane = planeDao.getPlaneById(id);
+        plane = planeDao.getPlaneByIdWithFlight(plane);
+        planeDao.closeCurrentSession();
+        return plane;
+    }
     public Plane getPlaneById(Long id){
         planeDao.openCurrentSession();
         Plane plane = planeDao.getPlaneById(id);

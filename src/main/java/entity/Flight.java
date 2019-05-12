@@ -11,27 +11,32 @@ import java.util.List;
 @Entity
 @Table(name = "Flight")
 public class Flight {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "initialAirportId")
     private Airport initialAirport;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "finalAirportId")
     private Airport finalAirport;
+
     @Column(name = "initialDate")
     private LocalDateTime initialDate;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "planeId")
     private Plane plane;
+
     @ManyToMany
     @JoinTable(
             name = "flight_employee",
             joinColumns=@JoinColumn(name="flightId"),
-            inverseJoinColumns = @JoinColumn(name = "employeeId")
-    )
+            inverseJoinColumns = @JoinColumn(name = "employeeId"))
     private List<Employee> employees;
 
     public Flight()

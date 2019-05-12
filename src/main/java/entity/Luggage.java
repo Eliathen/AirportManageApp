@@ -1,29 +1,26 @@
 package entity;
 
 import javax.persistence.*;
-import java.util.LinkedList;
-import java.util.List;
+
 
 @Entity
 @Table(name = "Luggage")
 public class Luggage {
+
     @Id
     @Column(name = "code")
     private String code;
+
     @Column(name = "weight")
     private Float weight;
+
     @Column(name = "height")
     private Integer height;
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH
-            }
-    )
-    @JoinTable(
-            name = "ticket_luggage",
-            joinColumns=@JoinColumn(name="luggagecode"),
-            inverseJoinColumns = @JoinColumn(name = "ticketid")
-    )
-    private List<Ticket> tickets;
+
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "ticketId")
+    private Ticket ticket;
+
     public Luggage() {
     }
 
@@ -32,37 +29,46 @@ public class Luggage {
         this.weight = weight;
         this.height = height;
     }
-    public String getCode(){return code;}
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public Float getWeight() {
         return weight;
     }
-    public Integer getHeight(){
+
+    public void setWeight(Float weight) {
+        this.weight = weight;
+    }
+
+    public Integer getHeight() {
         return height;
     }
 
-    public List<Ticket> getTickets() {
-        return tickets;
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+    public Ticket getTicket() {
+        return ticket;
     }
 
-    public void addTicket(Ticket ticket){
-        if(tickets == null){
-            tickets = new LinkedList<Ticket>();
-        }
-        else{
-            tickets.add(ticket);
-        }
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
     }
 
     @Override
     public String toString() {
         return "Luggage{" +
-                ", code='" + code + '\'' +
+                "code='" + code + '\'' +
                 ", weight=" + weight +
                 ", height=" + height +
+                ", ticket=" + ticket +
                 '}';
     }
 }

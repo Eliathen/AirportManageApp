@@ -22,6 +22,18 @@ public class AirlineService {
         airlineDao.closeCurrentSession();
         return airline;
     }
+    public Airline getEmployees(Airline airline){
+        airlineDao.openCurrentSession();
+        airline = airlineDao.getEmployees(airline);
+        airlineDao.closeCurrentSession();
+        return airline;
+    }
+    public Airline getPlanes(Airline airline){
+        airlineDao.openCurrentSession();
+        airline = airlineDao.getPlanes(airline);
+        airlineDao.closeCurrentSession();
+        return airline;
+    }
     public void removeAirlineById(Long id){
         airlineDao.openCurrentSessionWithTransaction();
         airlineDao.removeAirlineById(id);

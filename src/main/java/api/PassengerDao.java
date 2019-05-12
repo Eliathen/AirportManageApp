@@ -12,8 +12,13 @@ public interface PassengerDao extends Serializable {
     void removePassengerById(Long id);
 
     void updatePassenger(Passenger passenger);
+
+    Passenger getTickets(Passenger passenger);
+
     Passenger getByPesel(String pesel);
+
     List<Passenger> getAllPassenger();
+
     List<Passenger> getAllPassengerBySurname(String surname);
 
 }

@@ -31,7 +31,7 @@ public class LuggageService {
     public void updateLuggage(Luggage luggage){
         luggageDao.openCurrentSessionWithTransaction();
         luggageDao.updateLuggage(luggage);
-        luggageDao.openCurrentSessionWithTransaction();
+        luggageDao.closeCurrentSessionWithTransaction();
     }
     public List<Luggage> getAllLuggage(){
         luggageDao.openCurrentSession();

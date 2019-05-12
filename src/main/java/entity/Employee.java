@@ -1,41 +1,48 @@
 package entity;
 
+
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 @Table(name = "Employee")
 public class Employee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    protected Long id;
+    private Long id;
+
     @Column(name = "name")
-    protected String name;
+    private String name;
+
     @Column(name = "surname")
-    protected String surname;
+    private String surname;
+
     @Column(name = "pesel")
-    protected String pesel;
+    private String pesel;
+
     @Column(name = "occupation")
     private String occupation;
+
     @Column(name = "salary")
-    private BigDecimal salary;
+    private Float salary;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "airlineId")
     private Airline airline;
+
     @ManyToMany
     @JoinTable(
             name = "flight_employee",
             joinColumns=@JoinColumn(name="employeeId"),
-            inverseJoinColumns = @JoinColumn(name = "flightId")
-    )
+            inverseJoinColumns = @JoinColumn(name = "flightId"))
     private List<Flight> flights;
 
     public Employee() {
     }
 
-    public Employee(Long id, String name, String surname, String pesel, String occupation, BigDecimal salary, Airline airline) {
+    public Employee(Long id, String name, String surname, String pesel, String occupation, Float salary, Airline airline) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -44,19 +51,27 @@ public class Employee {
         this.salary = salary;
         this.airline = airline;
     }
-    public Employee(String name, String surname, String pesel, String occupation, BigDecimal salary, Airline airline) {
+    public Employee(String name, String surname, String pesel, String occupation, Float salary) {
         this.name = name;
         this.surname = surname;
         this.pesel = pesel;
         this.occupation = occupation;
         this.salary = salary;
-        this.airline = airline;
+//        this.airline = airline;
+    }
+
+    public List<Flight> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(List<Flight> flights) {
+        this.flights = flights;
     }
 
     public String getOccupation(){
         return occupation;
     }
-    public BigDecimal getSalary(){
+    public Float getSalary(){
         return salary;
     }
 
@@ -96,7 +111,7 @@ public class Employee {
         this.occupation = occupation;
     }
 
-    public void setSalary(BigDecimal salary) {
+    public void setSalary(Float salary) {
         this.salary = salary;
     }
 
@@ -108,6 +123,8 @@ public class Employee {
         this.airline = airline;
     }
 
+
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -117,7 +134,6 @@ public class Employee {
                 ", pesel='" + pesel + '\'' +
                 ", occupation='" + occupation + '\'' +
                 ", salary=" + salary +
-                ", airline=" + airline +
                 '}';
     }
 }

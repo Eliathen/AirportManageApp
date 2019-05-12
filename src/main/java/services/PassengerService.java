@@ -26,6 +26,12 @@ public class PassengerService {
         passengerDao.updatePassenger(passenger);
         passengerDao.closeCurrentSessionWithTransaction();
     }
+    public Passenger getTickets(Passenger passenger){
+        passengerDao.openCurrentSession();
+        passenger = passengerDao.getTickets(passenger);
+        passengerDao.closeCurrentSession();
+        return passenger;
+    }
     public Passenger getPassengerByPesel(String pesel){
         passengerDao.openCurrentSessionWithTransaction();
         Passenger passenger = passengerDao.getByPesel(pesel);

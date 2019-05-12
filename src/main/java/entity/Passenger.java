@@ -6,16 +6,21 @@ import java.util.List;
 @Entity
 @Table(name = "Passenger")
 public class Passenger {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected Long id;
+
     @Column(name = "name")
     protected String name;
+
     @Column(name = "surname")
     protected String surname;
+
     @Column(name = "pesel")
     protected String pesel;
+    
     @OneToMany(mappedBy = "passenger", fetch = FetchType.LAZY,
                 cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     protected List<Ticket> tickets;

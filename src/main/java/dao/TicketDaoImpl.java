@@ -12,11 +12,7 @@ public class TicketDaoImpl extends BaseDao implements api.TicketDao {
     }
 
     public void saveTicket(Ticket ticket){
-        if(!isTicketAlreadyExist(ticket.getId())){
-            getCurrentSession().save(ticket);
-        }else{
-            //jezeli bilet istnieje
-        }
+        getCurrentSession().save(ticket);
     }
 
     public void removeTicketById(Long id){
@@ -29,7 +25,7 @@ public class TicketDaoImpl extends BaseDao implements api.TicketDao {
     }
     public Ticket getTicketById(Long id){
         try{
-            Query query = getCurrentSession().createQuery("FROM ticket WHERE id =: id");
+            Query query = getCurrentSession().createQuery("FROM Ticket WHERE id =: id");
             query.setParameter("id", id);
             Ticket ticket = (Ticket) query.uniqueResult();
             return ticket;
@@ -37,13 +33,17 @@ public class TicketDaoImpl extends BaseDao implements api.TicketDao {
             return new Ticket();
         }
     }
-    public boolean isTicketAlreadyExist(Long id){
-        if(getTicketById(id).getId()!=null){
-            return true;
-        }else{
-            return false;
+    public Ticket getAllTicketWithLuggages(Ticket ticket){
+        try{
+            Query query = getCurrentSession().createQuery("From Luggage WHERE ticketId =: ticketId");
+            query.setParameter("ticketId", ticket.getId());
+            ticket.setLuggages(query.getResultList());
+            return ticket;
+        }catch(NullPointerException e){
+            return ticket;
         }
     }
+
     public List<Ticket> getAllTicket(){
         try{
             Query query = getCurrentSession().createQuery("From TICKET");

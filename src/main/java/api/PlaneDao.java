@@ -15,6 +15,8 @@ public interface PlaneDao extends Serializable {
 
         Plane getPlaneById(Long id);
 
+        Plane getPlaneByIdWithFlight(Plane plane);
+
         List<Plane> getPlaneByModelNumber(Integer modelNumber);
 
         List<Plane> getAllPlane();

@@ -10,13 +10,8 @@ import java.util.List;
 public class PassengerDaoImpl extends BaseDao implements PassengerDao {
 
     public void savePassenger(Passenger passenger){
-        if(!isPassengerAlreadyExists(passenger.getPesel())){
-            getCurrentSession().save(passenger);
-        }
-        else{
-
-//            jeżeli taki pasażer istnieje
-        }
+        getCurrentSession().save(passenger);
+        //TODO sprawdzenie czy istnieje pasazer po peselu
 
     }
     public void removePassengerById(Long Id){
@@ -28,6 +23,16 @@ public class PassengerDaoImpl extends BaseDao implements PassengerDao {
         query.setParameter("Id", id);
         Passenger passenger = (Passenger) query.uniqueResult();
         return passenger;
+    }
+    public Passenger getTickets(Passenger passenger){
+        try{
+            Query query = getCurrentSession().createQuery("FROM Ticket WHERE passengerId =: passengerId");
+            query.setParameter("passengerId", passenger.getId());
+            passenger.setTickets(query.getResultList());
+            return passenger;
+        }catch(NullPointerException e){
+            return passenger;
+        }
     }
     public Passenger getByPesel(String pesel){
         //System.out.println("getByPesel");

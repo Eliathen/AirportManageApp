@@ -12,7 +12,10 @@ public interface TicketDao extends Serializable {
         void removeTicketById(Long id);
 
         List<Ticket> getAllTicket();
+
         List<Ticket> getAllTicketByPassangerId(Long id);
+
+        Ticket getAllTicketWithLuggages(Ticket ticket);
 
         void updateTicket(Ticket ticket);
 }

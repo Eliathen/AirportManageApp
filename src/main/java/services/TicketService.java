@@ -33,6 +33,13 @@ public class TicketService {
         ticketDao.closeCurrentSession();
         return tickets;
     }
+    public Ticket getTicketByIdWithLuggages(Long id){
+        ticketDao.openCurrentSession();
+        Ticket ticket = ticketDao.getTicketById(id);
+        ticket = ticketDao.getAllTicketWithLuggages(ticket);
+        ticketDao.closeCurrentSession();
+        return ticket;
+    }
     public List<Ticket> getAllTicketByPassangerId(Long id){
         ticketDao.openCurrentSession();
         List<Ticket> tickets = ticketDao.getAllTicketByPassangerId(id);

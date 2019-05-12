@@ -16,11 +16,11 @@ public class Airport {
     private String address;
     @Column(name = "city")
     private String city;
-    @OneToMany(mappedBy = "initialAirport",fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "initialAirport", fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
 //    @JoinColumn(name = "initialFlightId")
     private List<Flight> initialFlights;
-    @OneToMany(mappedBy = "finalAirport",fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "finalAirport", fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
 //    @JoinColumn(name = "finalFlightId")
     private List<Flight> finalFlights;
@@ -49,6 +49,14 @@ public class Airport {
     }
     public String getCity(){
         return city;
+    }
+
+    public List<Flight> getInitialFlights() {
+        return initialFlights;
+    }
+
+    public void setInitialFlights(List<Flight> initialFlights) {
+        this.initialFlights = initialFlights;
     }
 
     @Override

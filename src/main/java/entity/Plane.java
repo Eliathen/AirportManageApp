@@ -2,25 +2,35 @@ package entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+
 @Entity
-@Table(name = "plane")
+@Table(name = "Plane")
 public class Plane {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "registrationNumber")
     private String registrationNumber;
+
     @Column(name = "modelNumber")
     private Integer modelNumber;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "capacity")
     private Integer capacity;
+
     @Column(name = "weight")
     private Long weight;
+
     @OneToMany(mappedBy = "plane",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Flight> flights;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "airlineId")
     private Airline airline;
@@ -112,8 +122,26 @@ public class Plane {
                 ", name='" + name + '\'' +
                 ", capacity=" + capacity +
                 ", weight=" + weight +
-                ", flights=" + flights +
-                ", airline=" + airline +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plane plane = (Plane) o;
+        return Objects.equals(id, plane.id) &&
+                Objects.equals(registrationNumber, plane.registrationNumber) &&
+                Objects.equals(modelNumber, plane.modelNumber) &&
+                Objects.equals(name, plane.name) &&
+                Objects.equals(capacity, plane.capacity) &&
+                Objects.equals(weight, plane.weight) &&
+                Objects.equals(flights, plane.flights) &&
+                Objects.equals(airline, plane.airline);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, registrationNumber, modelNumber, name, capacity, weight, flights, airline);
     }
 }

@@ -34,6 +34,16 @@ public class PlaneDaoImpl extends BaseDao implements PlaneDao {
             return false;
         }
     }
+    public Plane getPlaneByIdWithFlight(Plane plane){
+        try{
+            Query query = getCurrentSession().createQuery("FROM Flight where planeid =: planeid");
+            query.setParameter("planeid", plane.getId());
+            plane.setFlights(query.getResultList());
+            return plane;
+        }catch(NullPointerException e){
+            return plane;
+        }
+    }
     public Plane getPlaneById(Long id){
         try{
             Query query = getCurrentSession().createQuery("FROM Plane where id =: id");

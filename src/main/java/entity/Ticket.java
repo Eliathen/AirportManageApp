@@ -4,23 +4,23 @@ package entity;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
+
 @Entity
 @Table(name = "Ticket")
 public class Ticket {
+    //TODO Dodac zarowno do klasy jak i bazy kod biletu
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "FlightNumber")
     private Flight flight;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "ticket_luggage",
-            joinColumns=@JoinColumn(name="ticketid"),
-            inverseJoinColumns = @JoinColumn(name = "luggagecode")
-    )
+
+    @OneToMany(mappedBy = "ticket", cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Luggage> luggages;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                           CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "passengerid")
@@ -37,7 +37,7 @@ public class Ticket {
 
     }
 
-    public Ticket(Flight flight, List<Luggage> luggage, Passenger passanger) {
+    public Ticket(Flight flight, Passenger passanger) {
         this.flight = flight;
         this.luggages = luggages;
         this.passenger = passanger;
@@ -81,8 +81,10 @@ public class Ticket {
         if(luggages == null){
             luggages = new LinkedList<Luggage>();
             luggages.add(luggage);
+            luggage.setTicket(this);
         }else{
             luggages.add(luggage);
+            luggage.setTicket(this);
         }
     }
 
@@ -91,7 +93,6 @@ public class Ticket {
         return "Ticket{" +
                 "id=" + id +
                 ", flight=" + flight +
-                ", luggage=" + luggages +
                 ", passenger=" + passenger +
                 '}';
     }

@@ -21,6 +21,18 @@ public class AirportService {
         airportDao.removeAirportById(id);
         airportDao.closeCurrentSessionWithTransaction();
     }
+    public Airport getInitialFlights(Airport airport){
+        airportDao.openCurrentSession();
+        airport = airportDao.getInitialFlights(airport);
+        airportDao.closeCurrentSession();
+        return airport;
+    }
+    public Airport getFinalFlights(Airport airport){
+        airportDao.openCurrentSession();
+        airport = airportDao.getFinalFlights(airport);
+        airportDao.closeCurrentSession();
+        return airport;
+    }
     public void updateAirport(Airport airport){
         airportDao.openCurrentSessionWithTransaction();
         airportDao.updateAirport(airport);

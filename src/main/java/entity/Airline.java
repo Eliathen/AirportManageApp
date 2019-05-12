@@ -9,19 +9,25 @@ import java.util.Objects;
 @Entity
 @Table(name = "airline")
 public class Airline {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "country")
     private String country;
+
     @Column(name = "otherDetails")
     private String otherDetails;
+
     @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Employee> employees;
+
     @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Plane> planes;
@@ -45,12 +51,15 @@ public class Airline {
     public Long getId(){
         return id;
     }
+
     public String getName(){
         return name;
     }
+
     public String getCountry() {
         return country;
     }
+
     public String getDetails(){
         return otherDetails;
     }
@@ -91,16 +100,20 @@ public class Airline {
         if(employees == null){
             employees = new LinkedList<Employee>();
             employees.add(employee);
+            employee.setAirline(this);
         }else{
             employees.add(employee);
+            employee.setAirline(this);
         }
     }
+
     public void addPlane(Plane plane){
         if(planes == null){
             planes = new LinkedList<Plane>();
             planes.add(plane);
         }else{
             planes.add(plane);
+            plane.setAirline(this);
         }
     }
 
@@ -111,9 +124,25 @@ public class Airline {
                 ", name='" + name + '\'' +
                 ", country='" + country + '\'' +
                 ", otherDetails='" + otherDetails + '\'' +
-                ", employees=" + employees +
-                ", planes=" + planes +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Airline airline = (Airline) o;
+        return Objects.equals(id, airline.id) &&
+                Objects.equals(name, airline.name) &&
+                Objects.equals(country, airline.country) &&
+                Objects.equals(otherDetails, airline.otherDetails) &&
+                Objects.equals(employees, airline.employees) &&
+                Objects.equals(planes, airline.planes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, country, otherDetails, employees, planes);
     }
 }
 

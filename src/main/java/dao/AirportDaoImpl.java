@@ -34,13 +34,33 @@ public class AirportDaoImpl extends BaseDao implements api.AirportDao {
     public Airport getAirportById(Long id){
         try{
             Query query = getCurrentSession().createQuery("FROM Airport WHERE id =: id");
+            query.setParameter("id", id);
             Airport airport = (Airport)query.uniqueResult();
             return airport;
         }catch(NullPointerException e){
             return new Airport();
         }
     }
-
+    public Airport getInitialFlights(Airport airport){
+        try{
+            Query query = getCurrentSession().createQuery("FROM Flight WHERE initialAirportId =: initialAirportId");
+            query.setParameter("initialAirportId", airport.getId());
+            airport.setInitialFlights(query.getResultList());
+            return airport;
+        }catch(NullPointerException e){
+            return airport;
+        }
+    }
+    public Airport getFinalFlights(Airport airport){
+        try{
+            Query query = getCurrentSession().createQuery("FROM Flight WHERE finalAirportId =: finalAirportId");
+            query.setParameter("finalAirportId", airport.getId());
+            airport.setInitialFlights(query.getResultList());
+            return airport;
+        }catch(NullPointerException e){
+            return airport;
+        }
+    }
     public List<Airport> getAllAirport(){
         try{
             Query query = getCurrentSession().createQuery("FROM airport");

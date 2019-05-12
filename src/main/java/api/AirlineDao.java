@@ -15,6 +15,10 @@ public interface AirlineDao extends Serializable {
 
     List<Airline> getAllAirline();
 
+    Airline getPlanes(Airline airline);
+
+    Airline getEmployees(Airline airline);
+
     void updateAirline(Airline airline);
 
 }
