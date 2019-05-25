@@ -1,11 +1,8 @@
 package entity;
 
-import sun.util.resources.LocaleData;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.LinkedList;
+
 import java.util.List;
 
 @Entity

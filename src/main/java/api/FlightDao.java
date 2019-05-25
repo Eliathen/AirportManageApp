@@ -1,8 +1,6 @@
 package api;
 
-import entity.Airline;
 import entity.Flight;
-import sun.util.resources.LocaleData;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
