@@ -35,6 +35,8 @@ public class PassengerController {
     private TableColumn<PassengerFX, String> surnameColumn;
     @FXML
     private TableColumn<PassengerFX, String> peselColumn;
+    @FXML
+    private MenuItem deleteMenuItem;
 
 
     @FXML
@@ -47,6 +49,7 @@ public class PassengerController {
         addButton.disableProperty().bind(nameTextField.textProperty().isEmpty());
         addButton.disableProperty().bind(surnameTextField.textProperty().isEmpty());
         addButton.disableProperty().bind(peselTextField.textProperty().isEmpty());
+        deleteMenuItem.disableProperty().bind(passangerTableView.getSelectionModel().selectedItemProperty().isNull());
         passengerModel.init();
         this.passangerTableView.setItems(this.passengerModel.getPassengerFXObservableList());
         this.idColumn.setCellValueFactory(cellData->cellData.getValue().idProperty().asObject());
@@ -54,6 +57,14 @@ public class PassengerController {
         this.surnameColumn.setCellValueFactory(cellData->cellData.getValue().surnameProperty());
         this.peselColumn.setCellValueFactory(cellData->cellData.getValue().peselProperty());
 
+        this.passangerTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, nextValue) -> {
+            this.passengerModel.setPassengerFXObjectProperty(nextValue);
+        });
+
+    }
+    @FXML
+    public void removePassenger(){
+        this.passengerModel.removePassenger();
     }
 
     @FXML

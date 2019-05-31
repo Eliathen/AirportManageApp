@@ -5,6 +5,8 @@ import dao.PassengerDaoImpl;
 import entity.Passenger;
 import exceptions.PassengerAlreadyExist;
 import javafx.beans.Observable;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import services.PassengerService;
@@ -13,8 +15,18 @@ import java.util.List;
 
 public class PassengerModel {
 
+    private ObjectProperty<PassengerFX> passengerFXObjectProperty = new SimpleObjectProperty<>(new PassengerFX());
+
     private ObservableList<PassengerFX> passengerFXObservableList = FXCollections.observableArrayList();
 
+    public PassengerFX getPassengerFXObjectProperty() {
+        return passengerFXObjectProperty.get();
+    }
+
+
+    public void setPassengerFXObjectProperty(PassengerFX passengerFXObjectProperty) {
+        this.passengerFXObjectProperty.set(passengerFXObjectProperty);
+    }
 
     public void addNewPassenger(String name, String surname, String pesel) throws PassengerAlreadyExist {
         Passenger passenger = new Passenger(name,surname,pesel);
@@ -23,6 +35,11 @@ public class PassengerModel {
         passengerFXObservableList.clear();
 
 
+    }
+    public void removePassenger(){
+        PassengerService passengerService = new PassengerService();
+        passengerService.removePassengerById(this.getPassengerFXObjectProperty().getId());
+        this.init();
     }
 
     public void init(){
