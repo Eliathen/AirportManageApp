@@ -3,6 +3,7 @@ package dao;
 import entity.User;
 import exceptions.LoginAlreadyExistException;
 import org.hibernate.query.Query;
+import org.hibernate.service.UnknownServiceException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,31 +16,39 @@ public class UserDaoImpl extends BaseDao implements api.UserDao {
         Query query = getCurrentSession().createQuery("From User where id=:id");
         query.setParameter("id", id);
         User user = (User) query.uniqueResult();
-        System.out.println(user.toString());
+        System.out.println("getById: "+user.toString());
         return user;
     }
 
-    public User getByLogin(String login){
+    public User getByLogin(String login) {
+        try{
         Query query = getCurrentSession().createQuery("From User where login =: login");
         query.setParameter("login", login);
         User user = (User) query.uniqueResult();
+        if(user == null){
+            return new User();
+        }
         return user;
+        }catch(Exception e){
+            return new User();
+        }
     }
     public void saveUser(User user) throws LoginAlreadyExistException{
         if(!isLoginAlreadyExist(user.getLogin())) {
             getCurrentSession().save(user);
         }
         else {
-            throw new LoginAlreadyExistException("This login exists");
+            throw new LoginAlreadyExistException("Login exists");
         }
 
     }
     public boolean isLoginAlreadyExist(String login){
         User user = getByLogin(login);
-        if(user != null){
-            return true;
+        System.out.println("isLoginAlreadyExist: " + user.toString());
+        if(user.getLogin()==null){
+            return false;
         }
-        return false;
+        return true;
     }
     public void removeUserById(Long userId){
         User user = getById(userId);

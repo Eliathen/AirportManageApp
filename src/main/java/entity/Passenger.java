@@ -18,7 +18,7 @@ public class Passenger {
     @Column(name = "surname")
     protected String surname;
 
-    @Column(name = "pesel")
+    @Column(name = "pesel", unique = true)
     protected String pesel;
     
     @OneToMany(mappedBy = "passenger", fetch = FetchType.LAZY,

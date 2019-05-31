@@ -12,12 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.UserService;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginPanelControlls implements Initializable {
+public class LoginPanelController implements Initializable {
     @FXML
     private TextField login;
     @FXML
@@ -27,7 +26,7 @@ public class LoginPanelControlls implements Initializable {
     @FXML
     private Button loginButton;
 
-    public LoginPanelControlls() {
+    public LoginPanelController() {
 
     }
 
@@ -38,10 +37,13 @@ public class LoginPanelControlls implements Initializable {
             try {
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 stage.close();
-                Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainWindow.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/fxml/borderPaneMain.fxml"));
                 stage.setScene(new Scene(root));
                 stage.show();
-                System.out.println("Zalogowany");
+                stage.setResizable(true);
+                stage.setMinWidth(800);
+                stage.setMinHeight(600);
+                stage.setTitle("Flight Managment");
             }
             catch(Exception e){
                 e.printStackTrace();

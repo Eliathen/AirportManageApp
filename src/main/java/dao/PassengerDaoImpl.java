@@ -2,6 +2,7 @@ package dao;
 
 import api.PassengerDao;
 import entity.Passenger;
+import exceptions.PassengerAlreadyExist;
 import org.hibernate.query.Query;
 
 import java.util.LinkedList;
@@ -9,10 +10,12 @@ import java.util.List;
 
 public class PassengerDaoImpl extends BaseDao implements PassengerDao {
 
-    public void savePassenger(Passenger passenger){
-        getCurrentSession().save(passenger);
-        //TODO sprawdzenie czy istnieje pasazer po peselu
-
+    public void savePassenger(Passenger passenger) throws PassengerAlreadyExist{
+        if(!isPassengerAlreadyExists(passenger.getPesel())){
+            getCurrentSession().save(passenger);
+        }else{
+            throw new PassengerAlreadyExist("Podana osoba juz istnieje w bazie");
+        }
     }
     public void removePassengerById(Long Id){
         Passenger passenger = getById(Id);
@@ -35,26 +38,28 @@ public class PassengerDaoImpl extends BaseDao implements PassengerDao {
         }
     }
     public Passenger getByPesel(String pesel){
-        //System.out.println("getByPesel");
         try {
             Query query = getCurrentSession().createQuery("FROM Passenger  WHERE pesel =: pesel");
             query.setParameter("pesel", pesel);
             Passenger passenger = (Passenger) query.uniqueResult();
+            if(passenger == null){
+                return new Passenger();
+            }
             return passenger;
         }catch(NullPointerException e){
-            System.err.println("Pasazer nie istnieje");
             return new Passenger();
         }
     }
-    public void updatePassenger(Passenger passenger){
-        getCurrentSession().update(passenger);
-    }
 
     public boolean isPassengerAlreadyExists(String pesel){
-        if(getByPesel(pesel).getId()==null){
+        Passenger passenger = getByPesel(pesel);
+        if(passenger.getPesel()==null){
             return false;
         }
         return true;
+    }
+    public void updatePassenger(Passenger passenger){
+        getCurrentSession().update(passenger);
     }
     @SuppressWarnings("unchecked")
     public List<Passenger> getAllPassenger(){

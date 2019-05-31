@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.EventListener;
 import java.util.ResourceBundle;
 
-public class RegisterPanelControlls implements Initializable {
+public class RegisterPanelController implements Initializable {
     @FXML
     private TextField login;
 
@@ -24,7 +24,7 @@ public class RegisterPanelControlls implements Initializable {
     @FXML
     private Label resultLabel;
 
-    public RegisterPanelControlls() {
+    public RegisterPanelController() {
     }
 
     public void addUser() throws LoginAlreadyExistException {
@@ -38,8 +38,7 @@ public class RegisterPanelControlls implements Initializable {
             resultLabel.setText("User created");
             resultLabel.setTextFill(Color.GREEN);
         }catch (LoginAlreadyExistException e){
-            e.printStackTrace();
-            resultLabel.setText("User already exist");
+            resultLabel.setText(e.getMessage());
             resultLabel.setTextFill(Color.DARKRED);
         }
     }
