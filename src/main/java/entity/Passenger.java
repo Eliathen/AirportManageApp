@@ -34,12 +34,11 @@ public class Passenger {
         this.pesel = pesel;
     }
 
-    public Passenger(Long id, String name, String surname, String pesel, List<Ticket> tickets){
+    public Passenger(Long id, String name, String surname, String pesel){
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.pesel = pesel;
-        this.tickets = tickets;
     }
 
     public Passenger(String name, String surname, String pesel, List<Ticket> tickets) {

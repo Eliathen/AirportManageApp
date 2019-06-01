@@ -2,7 +2,8 @@ package dao;
 
 import api.PassengerDao;
 import entity.Passenger;
-import exceptions.PassengerAlreadyExist;
+import exceptions.PassengerAlreadyExistException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 
 import java.util.LinkedList;
@@ -10,22 +11,28 @@ import java.util.List;
 
 public class PassengerDaoImpl extends BaseDao implements PassengerDao {
 
-    public void savePassenger(Passenger passenger) throws PassengerAlreadyExist{
+    public void savePassenger(Passenger passenger) throws PassengerAlreadyExistException {
         if(!isPassengerAlreadyExists(passenger.getPesel())){
             getCurrentSession().save(passenger);
         }else{
-            throw new PassengerAlreadyExist("Podana osoba juz istnieje w bazie");
+            throw new PassengerAlreadyExistException("Podana osoba juz istnieje w bazie");
         }
     }
     public void removePassengerById(Long Id){
         Passenger passenger = getById(Id);
-        getCurrentSession().delete(passenger);
+        if(passenger.getPesel()!=null) {
+            getCurrentSession().delete(passenger);
+        }
     }
     public Passenger getById(Long id){
-        Query query = getCurrentSession().createQuery("FROM Passenger WHERE Id =: Id");
-        query.setParameter("Id", id);
-        Passenger passenger = (Passenger) query.uniqueResult();
-        return passenger;
+            Query query = getCurrentSession().createQuery("FROM Passenger WHERE Id =: Id");
+            query.setParameter("Id", id);
+            Passenger passenger = (Passenger) query.uniqueResult();
+            if(passenger==null){
+                Passenger passenger1 = new Passenger();
+                return passenger1;
+            }
+            return passenger;
     }
     public Passenger getTickets(Passenger passenger){
         try{
@@ -35,6 +42,12 @@ public class PassengerDaoImpl extends BaseDao implements PassengerDao {
             return passenger;
         }catch(NullPointerException e){
             return passenger;
+        }
+    }
+    public void removePassengerByPesel(String pesel){
+        Passenger passenger = getByPesel(pesel);
+        if(passenger.getPesel()!=null){
+            getCurrentSession().delete(passenger);
         }
     }
     public Passenger getByPesel(String pesel){
@@ -58,8 +71,17 @@ public class PassengerDaoImpl extends BaseDao implements PassengerDao {
         }
         return true;
     }
-    public void updatePassenger(Passenger passenger){
-        getCurrentSession().update(passenger);
+    public void updatePassenger(Passenger passenger) throws PassengerAlreadyExistException {
+        try {
+            Query query = getCurrentSession().createQuery("UPDATE Passenger SET name = :name, surname = :surname, pesel= :pesel WHERE id = :id");
+            query.setParameter("name", passenger.getName());
+            query.setParameter("surname", passenger.getSurname());
+            query.setParameter("pesel", passenger.getPesel());
+            query.setParameter("id", passenger.getId());
+            int update = query.executeUpdate();
+        }catch(ConstraintViolationException e){
+            throw new PassengerAlreadyExistException("Pesel exists in database");
+        }
     }
     @SuppressWarnings("unchecked")
     public List<Passenger> getAllPassenger(){

@@ -42,7 +42,7 @@ public class LoginPanelController implements Initializable {
                 stage.show();
                 stage.setResizable(true);
                 stage.setMinWidth(800);
-                stage.setMinHeight(600);
+                stage.setMinHeight(800);
                 stage.setTitle("Flight Managment");
             }
             catch(Exception e){

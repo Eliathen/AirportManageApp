@@ -2,7 +2,7 @@ package services;
 
 import dao.PassengerDaoImpl;
 import entity.Passenger;
-import exceptions.PassengerAlreadyExist;
+import exceptions.PassengerAlreadyExistException;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class PassengerService {
     public PassengerService() {
         this.passengerDao = new PassengerDaoImpl();
     }
-    public void savePassenger(Passenger passenger) throws PassengerAlreadyExist {
+    public void savePassenger(Passenger passenger) throws PassengerAlreadyExistException {
         passengerDao.openCurrentSessionWithTransaction();
         passengerDao.savePassenger(passenger);
         passengerDao.closeCurrentSessionWithTransaction();
@@ -22,7 +22,12 @@ public class PassengerService {
         passengerDao.removePassengerById(id);
         passengerDao.closeCurrentSessionWithTransaction();
     }
-    public void updatePassenger(Passenger passenger){
+    public void removePassengerByPesel(String pesel){
+        passengerDao.openCurrentSessionWithTransaction();
+        passengerDao.removePassengerByPesel(pesel);
+        passengerDao.closeCurrentSessionWithTransaction();
+    }
+    public void updatePassenger(Passenger passenger) throws PassengerAlreadyExistException {
         passengerDao.openCurrentSessionWithTransaction();
         passengerDao.updatePassenger(passenger);
         passengerDao.closeCurrentSessionWithTransaction();
