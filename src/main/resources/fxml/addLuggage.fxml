@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.AddLuggageController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/luggage_icon.png" />
+         </image>
+         <VBox.margin>
+            <Insets bottom="15.0" />
+         </VBox.margin>
+      </ImageView>
+      <GridPane prefHeight="131.0" prefWidth="600.0">
+         <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="316.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="319.0" minWidth="10.0" prefWidth="284.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="319.0" minWidth="10.0" prefWidth="284.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label text="Code">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="codeTextField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" GridPane.columnIndex="1" />
+            <Label text="Weight" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="weightTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Height" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="heightTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <HBox alignment="CENTER">
+         <children>
+            <VBox>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#saveLuggage" text="SAVE" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </VBox.margin>
+      </HBox>
+      <Label fx:id="resultLabel" />
+   </children>
+   <padding>
+      <Insets top="10.0" />
+   </padding>
+</VBox>

@@ -7,9 +7,24 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane fx:id="topMenuButtons" alignment="TOP_CENTER" prefHeight="146.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.TopMenuButtonsController">
+<FlowPane fx:id="topMenuButtons" alignment="TOP_CENTER" prefWidth="767.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.TopMenuButtonsController">
    <children>
-      <Button accessibleRole="PARENT" mnemonicParsing="false" onAction="#openFlights" prefHeight="60.0" prefWidth="160.0" text="Flights">
+      <Button accessibleRole="PARENT" maxHeight="100.0" maxWidth="200.0" mnemonicParsing="false" onAction="#openTickets" text="Tickets">
+         <graphic>
+            <ImageView accessibleRole="PARENT" fitHeight="43.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" rotate="-45.0" translateX="-5.0">
+               <image>
+                  <Image url="@../images/tickets_button_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Arial" size="17.0" />
+         </font>
+         <FlowPane.margin>
+            <Insets right="20.0" top="10.0" />
+         </FlowPane.margin>
+      </Button>
+      <Button accessibleRole="PARENT" maxHeight="100.0" maxWidth="200.0" mnemonicParsing="false" onAction="#openFlights" text="Flights">
          <graphic>
             <ImageView fitHeight="48.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -20,9 +35,9 @@
             <Font name="Arial" size="17.0" />
          </font>
          <FlowPane.margin>
-            <Insets right="20.0" />
+            <Insets right="20.0" top="10.0" />
          </FlowPane.margin></Button>
-      <Button accessibleRole="PARENT" mnemonicParsing="false" onAction="#openPassengers" prefHeight="60.0" prefWidth="160.0" text="Passengers">
+      <Button accessibleRole="PARENT" maxHeight="100.0" maxWidth="200.0" mnemonicParsing="false" onAction="#openPassengers" text="Passengers">
          <graphic>
             <ImageView fitHeight="48.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -31,9 +46,9 @@
             </ImageView>
          </graphic>
          <FlowPane.margin>
-            <Insets right="20.0" />
+            <Insets right="20.0" top="10.0" />
          </FlowPane.margin></Button>
-      <Button accessibleRole="PARENT" mnemonicParsing="false" onAction="#openAirlines" prefHeight="60.0" prefWidth="160.0" text="Alirlines">
+      <Button accessibleRole="PARENT" maxHeight="100.0" maxWidth="200.0" mnemonicParsing="false" onAction="#openAirlines" text="Alirlines">
          <graphic>
             <ImageView fitHeight="51.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -42,9 +57,9 @@
             </ImageView>
          </graphic>
          <FlowPane.margin>
-            <Insets right="20.0" />
+            <Insets right="20.0" top="10.0" />
          </FlowPane.margin></Button>
-      <Button accessibleRole="PARENT" mnemonicParsing="false" onAction="#openAirports" prefHeight="60.0" prefWidth="160.0" text="AirPorts">
+      <Button accessibleRole="PARENT" maxHeight="100.0" maxWidth="200.0" mnemonicParsing="false" onAction="#openAirports" text="AirPorts">
          <graphic>
             <ImageView fitHeight="49.0" fitWidth="122.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -53,10 +68,10 @@
             </ImageView>
          </graphic>
          <FlowPane.margin>
-            <Insets />
+            <Insets right="20.0" top="10.0" />
          </FlowPane.margin></Button>
    </children>
    <padding>
-      <Insets top="25.0" />
+      <Insets bottom="25.0" top="25.0" />
    </padding>
 </FlowPane>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<FlowPane alignment="TOP_RIGHT" columnHalignment="RIGHT" rowValignment="TOP" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.AirlineController">
+   <children>
+      <VBox alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <children>
+            <TreeView fx:id="airlinesTreeView" accessibleRole="PARENT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onAction" prefHeight="400.0" prefWidth="312.0" showRoot="false" />
+         </children>
+      </VBox>
+   </children>
+</FlowPane>

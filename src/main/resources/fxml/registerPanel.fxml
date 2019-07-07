@@ -86,7 +86,7 @@
                   </PasswordField>
                </children>
             </GridPane>
-            <Button mnemonicParsing="false" onAction="#addUser" prefHeight="39.0" prefWidth="138.0" text="REGISTER" GridPane.rowIndex="2">
+            <Button fx:id="registerButton" mnemonicParsing="false" onAction="#addUser" prefHeight="39.0" prefWidth="138.0" text="REGISTER" GridPane.rowIndex="2">
                <font>
                   <Font size="20.0" />
                </font>
