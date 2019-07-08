@@ -26,7 +26,7 @@ public class Plane {
     private Integer capacity;
 
     @Column(name = "weight")
-    private Long weight;
+    private Integer weight;
 
     @OneToMany(mappedBy = "plane",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Flight> flights;
@@ -38,7 +38,7 @@ public class Plane {
     public Plane() {
     }
 
-    public Plane(Long id, String registrationNumber, Integer modelNumber, Integer capacity, Long weight){
+    public Plane(Long id, String registrationNumber, Integer modelNumber, Integer capacity, Integer weight){
         this.id = id;
         this.registrationNumber = registrationNumber;
         this.modelNumber = modelNumber;
@@ -46,7 +46,7 @@ public class Plane {
         this.weight = weight;
     }
 
-    public Plane(String registrationNumber, Integer modelNumber, String name, Integer capacity, Long weight) {
+    public Plane(String registrationNumber, Integer modelNumber, String name, Integer capacity, Integer weight) {
         this.registrationNumber = registrationNumber;
         this.modelNumber = modelNumber;
         this.name = name;
@@ -57,19 +57,24 @@ public class Plane {
     public Long getId(){
         return id;
     }
+
     public String getRegistrationNumber(){
         return registrationNumber;
     }
+
     public Integer getModelNumber(){
         return modelNumber;
     }
+
     public String getName(){
         return name;
     }
+
     public Integer getCapacity(){
         return capacity;
     }
-    public Long getWeight(){
+
+    public Integer getWeight(){
         return weight;
     }
 
@@ -93,7 +98,7 @@ public class Plane {
         this.capacity = capacity;
     }
 
-    public void setWeight(Long weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 

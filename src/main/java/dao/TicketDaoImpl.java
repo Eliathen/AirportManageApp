@@ -10,11 +10,9 @@ public class TicketDaoImpl extends BaseDao implements api.TicketDao {
 
     public TicketDaoImpl() {
     }
-
     public void saveTicket(Ticket ticket){
         getCurrentSession().save(ticket);
     }
-
     public void removeTicketById(Long id){
         try{
             Ticket ticket = getTicketById(id);
@@ -33,7 +31,7 @@ public class TicketDaoImpl extends BaseDao implements api.TicketDao {
             return new Ticket();
         }
     }
-    public Ticket getAllTicketWithLuggages(Ticket ticket){
+    public Ticket getTicketWithLuggages(Ticket ticket){
         try{
             Query query = getCurrentSession().createQuery("From Luggage WHERE ticketId =: ticketId");
             query.setParameter("ticketId", ticket.getId());
@@ -43,27 +41,15 @@ public class TicketDaoImpl extends BaseDao implements api.TicketDao {
             return ticket;
         }
     }
-
     public List<Ticket> getAllTicket(){
         try{
-            Query query = getCurrentSession().createQuery("From TICKET");
+            Query query = getCurrentSession().createQuery("From Ticket");
             List<Ticket> tickets = query.getResultList();
             return tickets;
         }catch(NullPointerException e){
             return new LinkedList<Ticket>();
         }
     }
-    public List<Ticket> getAllTicketByPassangerId(Long id){
-        try{
-            Query query = getCurrentSession().createQuery("From TICKET WHERE PASSANGERID =: id");
-            query.setParameter("id", id);
-            List<Ticket> tickets = query.getResultList();
-            return tickets;
-        }catch(NullPointerException e){
-            return new LinkedList<Ticket>();
-        }
-    }
-
     public void updateTicket(Ticket ticket){
         if(ticket!=null){
             getCurrentSession().update(ticket);

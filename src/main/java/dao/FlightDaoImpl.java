@@ -2,6 +2,7 @@ package dao;
 
 import api.FlightDao;
 import entity.Flight;
+import org.hibernate.Hibernate;
 import org.hibernate.query.Query;
 
 import java.time.LocalDateTime;
@@ -18,31 +19,17 @@ public class FlightDaoImpl extends BaseDao implements FlightDao {
         getCurrentSession().delete(flight);
     }
 
-    public Flight getFlightById(Long id){
-        try{
-            Query query = getCurrentSession().createQuery("FROM Flight WHERE id =: id");
-            query.setParameter("id", id);
-            Flight flight = (Flight)query.uniqueResult();
+    public Flight getEmployees(Flight flight){
+            String hql = "SELECT e FROM Employee e join e.flights f WHERE f.id =: id";
+            Query query = getCurrentSession().createQuery(hql);
+            query.setParameter("id", flight.getId());
+            flight.setEmployees(query.getResultList());
             return flight;
-        }catch (NullPointerException e){
-            return new Flight();
-        }
     }
+
     public List<Flight> getAllFlight(){
         try{
             Query query = getCurrentSession().createQuery("FROM Flight");
-            List<Flight> flights = query.getResultList();
-            return flights;
-        }catch(NullPointerException e){
-            return new LinkedList<Flight>();
-        }
-
-    }
-
-    public List<Flight> getAllFlightByDate(LocalDateTime date){
-        try{
-            Query query = getCurrentSession().createQuery("FROM Flight where initialDate =: initialDate");
-            query.setParameter("initialDate", date);
             List<Flight> flights = query.getResultList();
             return flights;
         }catch(NullPointerException e){

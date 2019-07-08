@@ -1,6 +1,7 @@
 package dao;
 
 import entity.*;
+import exceptions.ApplicationException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,11 +11,13 @@ import org.hibernate.cfg.Configuration;
 public abstract class BaseDao {
 
     private Session currentSession;
+
     private Transaction currentTransaction;
 
     public BaseDao() {
     }
-    public Session openCurrentSession(){
+
+    public Session openCurrentSession() throws ApplicationException {
         try {
             currentSession = getSessionFactory().openSession();
             return currentSession;
@@ -23,6 +26,7 @@ public abstract class BaseDao {
         }
         return currentSession;
     }
+
     public void closeCurrentSession(){
         currentSession.close();
     }
@@ -30,22 +34,23 @@ public abstract class BaseDao {
     public Session getCurrentSession() {
         return currentSession;
     }
-    public Session openCurrentSessionWithTransaction(){
+
+    public Session openCurrentSessionWithTransaction() throws ApplicationException {
         try {
             currentSession = getSessionFactory().openSession();
             currentTransaction = currentSession.beginTransaction();
             return currentSession;
         }catch(HibernateException e){
-            e.printStackTrace();
+            throw new ApplicationException(e.getMessage());
         }
-        return currentSession;
     }
+
     public void closeCurrentSessionWithTransaction(){
         currentTransaction.commit();
         currentSession.close();
-
     }
-    private static SessionFactory getSessionFactory() {
+
+    private static SessionFactory getSessionFactory() throws ApplicationException {
         try {
             SessionFactory sessionFactory = new Configuration()
                     .configure("hibernate.cfg.xml")
@@ -61,8 +66,19 @@ public abstract class BaseDao {
                     .buildSessionFactory();
             return sessionFactory;
         }catch(Exception e){
-            e.printStackTrace();
-            return null;
+            throw new ApplicationException("Problem with connection with Database");
         }
+    }
+
+    public void setCurrentSession(Session currentSession) {
+        this.currentSession = currentSession;
+    }
+
+    public Transaction getCurrentTransaction() {
+        return currentTransaction;
+    }
+
+    public void setCurrentTransaction(Transaction currentTransaction) {
+        this.currentTransaction = currentTransaction;
     }
 }

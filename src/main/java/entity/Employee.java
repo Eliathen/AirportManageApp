@@ -7,7 +7,6 @@ import java.util.List;
 @Entity
 @Table(name = "Employee")
 public class Employee {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,7 +18,7 @@ public class Employee {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "pesel")
+    @Column(name = "pesel", unique = true)
     private String pesel;
 
     @Column(name = "occupation")
@@ -29,10 +28,10 @@ public class Employee {
     private Float salary;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "airlineId")
+    @JoinColumn(name = "airlineId", nullable = false)
     private Airline airline;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(
             name = "flight_employee",
             joinColumns=@JoinColumn(name="employeeId"),
@@ -51,13 +50,13 @@ public class Employee {
         this.salary = salary;
         this.airline = airline;
     }
-    public Employee(String name, String surname, String pesel, String occupation, Float salary) {
+
+    public Employee(String name, String surname,String pesel, String occupation, Float salary) {
         this.name = name;
         this.surname = surname;
         this.pesel = pesel;
         this.occupation = occupation;
         this.salary = salary;
-//        this.airline = airline;
     }
 
     public List<Flight> getFlights() {
@@ -71,6 +70,7 @@ public class Employee {
     public String getOccupation(){
         return occupation;
     }
+
     public Float getSalary(){
         return salary;
     }
@@ -122,8 +122,6 @@ public class Employee {
     public void setAirline(Airline airline) {
         this.airline = airline;
     }
-
-
 
     @Override
     public String toString() {

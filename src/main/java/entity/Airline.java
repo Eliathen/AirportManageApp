@@ -12,9 +12,9 @@ public class Airline {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
-
+    
     @Column(name = "name")
     private String name;
 
@@ -25,12 +25,19 @@ public class Airline {
     private String otherDetails;
 
     @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE})
     private List<Employee> employees;
 
     @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE})
     private List<Plane> planes;
+
+    public String getOtherDetails() {
+        return otherDetails;
+    }
+    public void setOtherDetails(String otherDetails) {
+        this.otherDetails = otherDetails;
+    }
 
     public Airline() {
     }
@@ -47,7 +54,6 @@ public class Airline {
         this.country = country;
         this.otherDetails = otherDetails;
     }
-
     public Long getId(){
         return id;
     }
@@ -83,40 +89,15 @@ public class Airline {
     public void setCountry(String country) {
         this.country = country;
     }
-
     public void setDetails(String otherDetails) {
         this.otherDetails = otherDetails;
     }
-
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
-
     public void setPlanes(List<Plane> planes) {
         this.planes = planes;
     }
-
-    public void addEmployee(Employee employee){
-        if(employees == null){
-            employees = new LinkedList<Employee>();
-            employees.add(employee);
-            employee.setAirline(this);
-        }else{
-            employees.add(employee);
-            employee.setAirline(this);
-        }
-    }
-
-    public void addPlane(Plane plane){
-        if(planes == null){
-            planes = new LinkedList<Plane>();
-            planes.add(plane);
-        }else{
-            planes.add(plane);
-            plane.setAirline(this);
-        }
-    }
-
     @Override
     public String toString() {
         return "Airline{" +
@@ -126,23 +107,8 @@ public class Airline {
                 ", otherDetails='" + otherDetails + '\'' +
                 '}';
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Airline airline = (Airline) o;
-        return Objects.equals(id, airline.id) &&
-                Objects.equals(name, airline.name) &&
-                Objects.equals(country, airline.country) &&
-                Objects.equals(otherDetails, airline.otherDetails) &&
-                Objects.equals(employees, airline.employees) &&
-                Objects.equals(planes, airline.planes);
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(id, name, country, otherDetails, employees, planes);
     }
 }
-

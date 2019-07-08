@@ -10,17 +10,17 @@ public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    protected Long id;
+    private Long id;
 
     @Column(name = "name")
-    protected String name;
+    private String name;
 
     @Column(name = "surname")
-    protected String surname;
+    private String surname;
 
     @Column(name = "pesel", unique = true)
-    protected String pesel;
-    
+    private String pesel;
+
     @OneToMany(mappedBy = "passenger", fetch = FetchType.LAZY,
                 cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     protected List<Ticket> tickets;

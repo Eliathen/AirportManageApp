@@ -12,6 +12,7 @@ public class AirlineDaoImpl extends BaseDao implements AirlineDao {
     public AirlineDaoImpl() {
 
     }
+
     public void saveAirline(Airline airline) {
             getCurrentSession().save(airline);
     }
@@ -26,9 +27,10 @@ public class AirlineDaoImpl extends BaseDao implements AirlineDao {
             return new Airline();
         }
     }
+
     public Airline getPlanes(Airline airline){
         try{
-            Query query = getCurrentSession().createQuery("FROM Plane where id=: id");
+            Query query = getCurrentSession().createQuery("FROM Plane where AIRLINEID = :id");
             query.setParameter("id", airline.getId());
             airline.setPlanes(query.getResultList());
             return airline;
@@ -36,9 +38,10 @@ public class AirlineDaoImpl extends BaseDao implements AirlineDao {
             return airline;
         }
     }
+
     public Airline getEmployees(Airline airline){
         try{
-            Query query = getCurrentSession().createQuery("FROM Employee where id=: id");
+            Query query = getCurrentSession().createQuery("FROM Employee where AIRLINEID=: id");
             query.setParameter("id", airline.getId());
             airline.setEmployees(query.getResultList());
             return airline;
@@ -46,6 +49,7 @@ public class AirlineDaoImpl extends BaseDao implements AirlineDao {
             return airline;
         }
     }
+
     public void removeAirlineById(Long id) {
         Airline airline = getAirlineById(id);
         getCurrentSession().delete(airline);
@@ -60,7 +64,7 @@ public class AirlineDaoImpl extends BaseDao implements AirlineDao {
             return new LinkedList<Airline>();
         }
     }
-
+    
     public void updateAirline(Airline airline) {
            getCurrentSession().update(airline);
     }

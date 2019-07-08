@@ -14,18 +14,18 @@ public class Flight {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "initialAirportId")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "initialairportid")
     private Airport initialAirport;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "finalAirportId")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "finalairportid")
     private Airport finalAirport;
 
     @Column(name = "initialDate")
     private LocalDateTime initialDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "planeId")
     private Plane plane;
 
@@ -40,6 +40,7 @@ public class Flight {
     {
 
     }
+
     public Flight(Long id, Airport initialAirport, Airport finalAirport, LocalDateTime initialDate, Plane plane) {
         this.id = id;
         this.initialAirport = initialAirport;
@@ -102,7 +103,6 @@ public class Flight {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
-
 
     @Override
     public String toString() {

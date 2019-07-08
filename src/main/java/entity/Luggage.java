@@ -2,7 +2,6 @@ package entity;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "Luggage")
 public class Luggage {
@@ -17,7 +16,7 @@ public class Luggage {
     @Column(name = "height")
     private Integer height;
 
-    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "ticketId")
     private Ticket ticket;
 
@@ -61,14 +60,5 @@ public class Luggage {
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }
-
-    @Override
-    public String toString() {
-        return "Luggage{" +
-                "code='" + code + '\'' +
-                ", weight=" + weight +
-                ", height=" + height +
-                ", ticket=" + ticket +
-                '}';
-    }
 }
+
