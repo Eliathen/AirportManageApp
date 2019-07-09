@@ -8,8 +8,11 @@ import javafx.beans.property.StringProperty;
 public class PassengerFX {
 
     private LongProperty id = new SimpleLongProperty();
+
     private StringProperty name = new SimpleStringProperty();
+
     private StringProperty surname = new SimpleStringProperty();
+
     private StringProperty pesel = new SimpleStringProperty();
 
     public long getId() {

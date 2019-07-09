@@ -1,10 +1,12 @@
 package gui.controllers;
 
 import entity.Passenger;
+import exceptions.ApplicationException;
 import exceptions.EmptyFieldException;
 import exceptions.PassengerAlreadyExistException;
 import exceptions.WrongPeselException;
 import gui.modelsFX.PassengerModel;
+import gui.utils.DialogsUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -13,12 +15,16 @@ import services.PassengerService;
 import validators.PeselValidator;
 
 public class AddPassengerController {
+
     @FXML
     private TextField nameTextField;
+
     @FXML
     private TextField surnameTextField;
+
     @FXML
     private TextField peselTextField;
+
     @FXML
     private Label resultLabel;
 
@@ -33,12 +39,14 @@ public class AddPassengerController {
         this.passengerModel = new PassengerModel();
         this.binds();
     }
+
     public void binds(){
         this.nameTextField.textProperty().bindBidirectional(this.passengerModel.getPassengerFXObjectProperty().nameProperty());
         this.surnameTextField.textProperty().bindBidirectional(this.passengerModel.getPassengerFXObjectProperty().surnameProperty());
         this.peselTextField.textProperty().bindBidirectional(this.passengerModel.getPassengerFXObjectProperty().peselProperty());
 
     }
+
     public TextField getNameTextField() {
         return nameTextField;
     }
@@ -62,7 +70,6 @@ public class AddPassengerController {
     public void setPeselTextField(TextField peselTextField) {
         this.peselTextField = peselTextField;
     }
-
 
     public PassengerModel getPassengerModelFromPassengerController() {
         return passengerModelFromPassengerController;
@@ -90,9 +97,6 @@ public class AddPassengerController {
 
     public void savePassenger() {
         try{
-            System.out.println(nameTextField.getText());
-            System.out.println(surnameTextField.getText());
-            System.out.println(peselTextField.getText());
             if(nameTextField.getText().isBlank() || surnameTextField.getText().isBlank() || peselTextField.getText().isBlank()){
                 throw new EmptyFieldException("Empty Field");
             }
@@ -113,7 +117,8 @@ public class AddPassengerController {
             resultLabel.setTextFill(Color.DARKRED);
         }
     }
-    public void addNewPassanger(){
+
+    public void addNewPassanger() throws ApplicationException {
         PassengerService passengerService = new PassengerService();
         Passenger passenger = new Passenger(nameTextField.getText(),surnameTextField.getText(),peselTextField.getText());
         try {
@@ -126,9 +131,12 @@ public class AddPassengerController {
             passengerModelFromPassengerController.init();
             resultLabel.setText(e.getMessage());
             resultLabel.setTextFill(Color.DARKRED);
+        } catch (ApplicationException e) {
+            DialogsUtils.errorDialog(e.getMessage());
         }
     }
-    public void updatePassanger(){
+
+    public void updatePassanger() throws ApplicationException {
         PassengerService passengerService = new PassengerService();
         Long id = passengerModel.getPassengerFXObjectProperty().getId();
         Passenger passenger = new Passenger(id, nameTextField.getText(),surnameTextField.getText(),peselTextField.getText());
@@ -142,8 +150,11 @@ public class AddPassengerController {
             passengerModelFromPassengerController.init();
             resultLabel.setText(e.getMessage());
             resultLabel.setTextFill(Color.DARKRED);
+        } catch (ApplicationException e) {
+            DialogsUtils.errorDialog(e.getMessage());
         }
     }
+
     public void clearFields(){
         this.nameTextField.clear();
         this.surnameTextField.clear();

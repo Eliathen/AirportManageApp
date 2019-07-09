@@ -1,7 +1,7 @@
 package gui.modelsFX;
 
 import entity.Passenger;
-import exceptions.PassengerAlreadyExistException;
+import exceptions.ApplicationException;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -20,6 +20,7 @@ public class PassengerModel {
     private ObservableList<PassengerFX> passengerFXObservableList = FXCollections.observableArrayList();
 
     private List<PassengerFX> passengerFXList = new ArrayList<>();
+
     private String name;
 
     private String surname;
@@ -29,7 +30,6 @@ public class PassengerModel {
     public PassengerFX getPassengerFXObjectProperty() {
         return passengerFXObjectProperty.get();
     }
-
 
     public void setPassengerFXObjectProperty(PassengerFX passengerFXObjectProperty) {
         this.passengerFXObjectProperty.set(passengerFXObjectProperty);
@@ -59,19 +59,13 @@ public class PassengerModel {
         this.pesel = pesel;
     }
 
-    //    public void addNewPassenger(String name, String surname, String pesel) throws PassengerAlreadyExistException {
-//        Passenger passenger = new Passenger(name,surname,pesel);
-//        PassengerService passengerService = new PassengerService();
-//        passengerService.savePassenger(passenger);
-//        passengerFXObservableList.clear();
-//    }
-    public void removePassenger(PassengerFX passengerFX){
+    public void removePassenger(PassengerFX passengerFX) throws ApplicationException {
         PassengerService passengerService = new PassengerService();
         passengerService.removePassengerByPesel(passengerFX.getPesel());
         this.init();
     }
 
-    public void init(){
+    public void init() throws ApplicationException {
         PassengerService passengerService = new PassengerService();
         List<Passenger> passengers =  passengerService.getAllPassenger();
         this.passengerFXList.clear();
@@ -85,7 +79,8 @@ public class PassengerModel {
         });
         this.passengerFXObservableList.setAll(passengerFXList);
     }
-    public void filterPassangersList(){
+
+    public void filterPassengersList(){
         if(!getName().isEmpty() && !getSurname().isEmpty() && !getPesel().isEmpty()){
             filterPredicate(predicateName().and(predicateSurname()).and(predicatePesel()));
         }
@@ -102,33 +97,33 @@ public class PassengerModel {
             filterPredicate(predicateName());
         }
         else if(!getSurname().isEmpty()){
-            System.out.println(getSurname());
             filterPredicate(predicateSurname());
         }
-        else if(!getPesel().isBlank()){
+        else if(!getPesel().isEmpty()){
             filterPredicate(predicatePesel());
         }
         else{
             this.passengerFXObservableList.setAll(this.passengerFXList);
         }
     }
+
     private Predicate<PassengerFX> predicateName() {
-        System.out.println(this.getName());
-        return passengerFX -> passengerFX.getName().equals(getName());
+        return passengerFX -> passengerFX.getName().contains(getName());
     }
+
     private Predicate<PassengerFX> predicateSurname(){
-        return passengerFX ->passengerFX.getSurname().equals(getSurname());
+        return passengerFX ->passengerFX.getSurname().contains(getSurname());
     }
+
     private Predicate<PassengerFX> predicatePesel(){
-        return passengerFX ->passengerFX.getPesel().equals(getPesel());
+        return passengerFX ->passengerFX.getPesel().contains(getPesel());
     }
+
     private void filterPredicate(Predicate<PassengerFX> predicate){
-        System.out.println(predicate);
-        System.out.println("Przed "+passengerFXList.toString());
         List<PassengerFX> newList = passengerFXList.stream().filter(predicate).collect(Collectors.toList());
-        System.out.println("Po " + newList.toString());
         this.passengerFXObservableList.setAll(newList);
     }
+
     public ObservableList<PassengerFX> getPassengerFXObservableList() {
         return passengerFXObservableList;
     }
