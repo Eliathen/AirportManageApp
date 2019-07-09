@@ -2,49 +2,37 @@ package services;
 
 import dao.AirportDaoImpl;
 import entity.Airport;
+import exceptions.ApplicationException;
 
 import java.util.List;
 
 public class AirportService {
+
     private AirportDaoImpl airportDao;
 
     public AirportService() {
         airportDao = new AirportDaoImpl();
     }
-    public void saveAirport(Airport airport){
+
+    public void saveAirport(Airport airport) throws ApplicationException {
         airportDao.openCurrentSessionWithTransaction();
         airportDao.saveAirport(airport);
         airportDao.closeCurrentSessionWithTransaction();
     }
-    public void removeAirportById(Long id){
+
+    public void removeAirportById(Long id) throws ApplicationException {
         airportDao.openCurrentSessionWithTransaction();
         airportDao.removeAirportById(id);
         airportDao.closeCurrentSessionWithTransaction();
     }
-    public Airport getInitialFlights(Airport airport){
-        airportDao.openCurrentSession();
-        airport = airportDao.getInitialFlights(airport);
-        airportDao.closeCurrentSession();
-        return airport;
-    }
-    public Airport getFinalFlights(Airport airport){
-        airportDao.openCurrentSession();
-        airport = airportDao.getFinalFlights(airport);
-        airportDao.closeCurrentSession();
-        return airport;
-    }
-    public void updateAirport(Airport airport){
+
+    public void updateAirport(Airport airport) throws ApplicationException {
         airportDao.openCurrentSessionWithTransaction();
         airportDao.updateAirport(airport);
         airportDao.closeCurrentSessionWithTransaction();
     }
-    public Airport getAirportById(Long id){
-        airportDao.openCurrentSession();
-        Airport airport = airportDao.getAirportById(id);
-        airportDao.closeCurrentSession();
-        return airport;
-    }
-    public List<Airport> getAllAirport(){
+
+    public List<Airport> getAllAirport() throws ApplicationException {
         airportDao.openCurrentSession();
         List<Airport> airports = airportDao.getAllAirport();
         airportDao.closeCurrentSession();

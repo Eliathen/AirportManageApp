@@ -2,41 +2,41 @@ package services;
 
 import dao.LuggageDaoImpl;
 import entity.Luggage;
+import exceptions.ApplicationException;
 
 import java.util.List;
 
 public class LuggageService {
+
     private LuggageDaoImpl luggageDao;
 
     public LuggageService(){
         this.luggageDao = new LuggageDaoImpl();
 
     }
-    public void saveLuggage(Luggage luggage){
+
+    public void saveLuggage(Luggage luggage) throws ApplicationException {
         luggageDao.openCurrentSessionWithTransaction();
         luggageDao.saveLuggage(luggage);
         luggageDao.closeCurrentSessionWithTransaction();
     }
-    public Luggage getLuggageByCode(String code){
+
+    public Luggage getLuggageByCode(String code) throws ApplicationException {
         luggageDao.openCurrentSession();
         Luggage luggage = luggageDao.getLuggageByCode(code);
         luggageDao.closeCurrentSession();
         return luggage;
     }
-    public void removeLuggageByCode(String code){
+
+    public void removeLuggageByCode(String code) throws ApplicationException {
         luggageDao.openCurrentSessionWithTransaction();
         luggageDao.removeLuggageByCode(code);
         luggageDao.closeCurrentSessionWithTransaction();
     }
-    public void updateLuggage(Luggage luggage){
+
+    public void updateLuggage(Luggage luggage) throws ApplicationException {
         luggageDao.openCurrentSessionWithTransaction();
         luggageDao.updateLuggage(luggage);
         luggageDao.closeCurrentSessionWithTransaction();
-    }
-    public List<Luggage> getAllLuggage(){
-        luggageDao.openCurrentSession();
-        List<Luggage> luggages = luggageDao.getAllLuggage();
-        luggageDao.closeCurrentSession();
-        return luggages;
     }
 }
